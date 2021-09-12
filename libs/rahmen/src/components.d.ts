@@ -5,22 +5,13 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ShellnutsHeaderProps } from "./components/shellnuts-header/shellnuts-header";
 export namespace Components {
     interface ShellnutsFooter {
     }
     interface ShellnutsHeader {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+        "default": boolean;
+        "headerProp": ShellnutsHeaderProps;
     }
     interface ShellnutsModal {
         "title": string;
@@ -56,18 +47,8 @@ declare namespace LocalJSX {
     interface ShellnutsFooter {
     }
     interface ShellnutsHeader {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+        "default"?: boolean;
+        "headerProp"?: ShellnutsHeaderProps;
     }
     interface ShellnutsModal {
         /**

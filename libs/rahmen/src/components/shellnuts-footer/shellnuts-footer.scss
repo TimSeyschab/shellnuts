@@ -1,3 +1,32 @@
 :host {
   display: block;
 }
+
+.sitefooter {
+  margin-top: 30px;
+  background-color: #393939;
+  width: 100%;
+  height: 44px;
+  left: 0;
+  display: flex;
+  position: absolute;
+}
+
+.footerlarge {
+  width: 70%;
+}
+
+.footersmall {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.impressum {
+  color: var(--text-color);
+
+  &:hover {
+    text-decoration: underline;
+    font-weight: bold;
+  }
+}

@@ -1,11 +1,97 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`shellnuts-header renders with values 1`] = `
-<shellnuts-header first="Stencil" last="'Don't call me a framework' JS">
+exports[`shellnuts-header renders with default values 1`] = `
+<shellnuts-header default="">
   <mock:shadow-root>
-    <div>
-      Hello, World! I'm Stencil undefined 'Don't call me a framework' JS
-    </div>
+    <header class="masthead">
+      <div class="brand-container">
+        <a href="#">
+          <span class="brand-initials">
+            SN
+          </span>
+          <span class="brand-name">
+            Shellnuts
+          </span>
+        </a>
+      </div>
+      <nav>
+        <div class="nav-container">
+          <div>
+            <a class="slide" href="/index.html">
+              <span class="element">
+                Hm
+              </span>
+              <span class="name">
+                Home
+              </span>
+            </a>
+          </div>
+          <div>
+            <a class="slide" href="/pages/rezepte/rezepte.html">
+              <span class="element">
+                Rzp
+              </span>
+              <span class="name">
+                Rezepte
+              </span>
+            </a>
+          </div>
+          <div>
+            <a class="slide" href="/pages/artikel/artikel.html">
+              <span class="element">
+                At
+              </span>
+              <span class="name">
+                Artikel
+              </span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </mock:shadow-root>
+</shellnuts-header>
+`;
+
+exports[`shellnuts-header renders with provided values 1`] = `
+<shellnuts-header>
+  <mock:shadow-root>
+    <header class="masthead">
+      <div class="brand-container">
+        <a href="#">
+          <span class="brand-initials">
+            SN
+          </span>
+          <span class="brand-name">
+            Shellnuts
+          </span>
+        </a>
+      </div>
+      <nav>
+        <div class="nav-container">
+          <div>
+            <a class="slide" href="/index.html">
+              <span class="element">
+                In
+              </span>
+              <span class="name">
+                Index
+              </span>
+            </a>
+          </div>
+          <div>
+            <a class="slide" href="/path/to/page.html">
+              <span class="element">
+                Pg
+              </span>
+              <span class="name">
+                Page
+              </span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
   </mock:shadow-root>
 </shellnuts-header>
 `;

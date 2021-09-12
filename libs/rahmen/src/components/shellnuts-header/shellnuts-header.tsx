@@ -1,4 +1,14 @@
-import { Component, h, Prop } from '@stencil/core';
+import {Component, h, Prop} from '@stencil/core';
+
+export interface ShellnutsHeaderProps {
+  urlList: ShellnutsHeaderUrl[];
+}
+
+export interface ShellnutsHeaderUrl {
+  url: string;
+  shortName: string;
+  longName: string;
+}
 
 @Component({
   tag: 'shellnuts-header',
@@ -6,26 +16,61 @@ import { Component, h, Prop } from '@stencil/core';
   shadow: true,
 })
 export class ShellnutsHeader {
-  /**
-   * The first name
-   */
-  @Prop() first: string;
 
-  /**
-   * The middle name
-   */
-  @Prop() middle: string;
+  @Prop() headerProp: ShellnutsHeaderProps;
+  @Prop() default: boolean = false;
 
-  /**
-   * The last name
-   */
-  @Prop() last: string;
-
-  private getText(): string {
-    return `${this.first} ${this.middle} ${this.last}`;
+  private getProps() {
+    if(this.default){
+      return this.defaultProp;
+    }
+    return this.headerProp;
   }
 
   render() {
-    return <div>Hello, World! I'm {this.getText()}</div>;
+    return (
+      <header class='masthead'>
+        <div class='brand-container'>
+          <a href='#'>
+            <span class='brand-initials'>SN</span>
+            <span class='brand-name'>Shellnuts</span>
+          </a>
+        </div>
+        <nav>
+          <div class='nav-container'>
+            {this.getProps().urlList.map(value => {
+              return (
+                <div>
+                  <a class='slide' href={value.url}>
+                    <span class='element'>{value.shortName}</span>
+                    <span class='name'>{value.longName}</span>
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </nav>
+      </header>
+    );
+  }
+
+  defaultProp={
+    urlList: [
+      {
+        url: "/index.html",
+        shortName: "Hm",
+        longName: "Home"
+      },
+      {
+        url: "/pages/rezepte/rezepte.html",
+        shortName: "Rzp",
+        longName: "Rezepte"
+      },
+      {
+        url: "/pages/artikel/artikel.html",
+        shortName: "At",
+        longName: "Artikel"
+      }
+    ]
   }
 }

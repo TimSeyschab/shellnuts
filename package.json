@@ -10,8 +10,6 @@
   },
   "private": true,
   "dependencies": {
-    "@nrwl/storybook": "^12.9.0",
-    "@nxext/stencil": "^12.1.2",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
@@ -21,6 +19,8 @@
     "@nrwl/linter": "12.9.0",
     "@nrwl/tao": "12.9.0",
     "@nrwl/workspace": "12.9.0",
+    "@nrwl/storybook": "^12.9.0",
+    "@nxext/stencil": "^12.1.2",
     "@playwright/test": "^1.14.1",
     "@stencil/core": "2.6.0",
     "@stencil/eslint-plugin": "0.3.1",

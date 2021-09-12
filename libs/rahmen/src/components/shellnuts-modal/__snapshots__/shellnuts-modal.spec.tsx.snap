@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shellnuts-modal renders with values 1`] = `
+<shellnuts-modal title="Test title" visible="">
+  <mock:shadow-root>
+    <div class="visible wrapper">
+      <div class="modal">
+        <span class="title">
+          Test title
+        </span>
+        <div class="content">
+          <slot></slot>
+        </div>
+        <div class="button-container">
+          <button class="ok">
+            Okay
+          </button>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+  <p>
+    Dies ist ein Test
+  </p>
+</shellnuts-modal>
+`;

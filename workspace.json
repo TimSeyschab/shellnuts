@@ -23,7 +23,10 @@
         },
         "e2e": {
           "executor": "@nrwl/workspace:run-commands",
-          "outputs": ["{options.outputPath}/www","{options.outputPath}/reports"],
+          "outputs": [
+            "{options.outputPath}/www",
+            "{options.outputPath}/reports"
+          ],
           "options": {
             "commands": [
               "npx playwright test -c libs/rahmen/playwright.config.ts"

@@ -1,3 +1,116 @@
 :host {
   display: block;
 }
+nav {
+  display: table;
+  position: relative;
+  table-layout: fixed;
+  width: 100%;
+
+  div.nav-container {
+    display: table-row;
+
+    > div {
+      display: table-cell;
+
+      &:nth-of-type(4n+1) .slide, &:nth-of-type(5n+1) a {
+        border-color: #3a6303;
+      }
+
+      &:nth-of-type(4n+1) .slide:hover, &:nth-of-type(5n+1) a:hover {
+        color: #264102;
+      }
+
+      &:nth-of-type(4n+2) .slide, &:nth-of-type(5n+2) a {
+        border-color: #ef3724;
+      }
+
+      &:nth-of-type(4n+2) .slide:hover, &:nth-of-type(5n+2) a:hover {
+        color: #a11a0c;
+      }
+
+      &:nth-of-type(4n+3) .slide, &:nth-of-type(5n+3) a {
+        border-color: #ffa61a;
+      }
+
+      &:nth-of-type(4n+3) .slide:hover, &:nth-of-type(5n+3) a:hover {
+        color: #b36d00;
+      }
+
+      &:nth-of-type(4n+4) .slide, &:nth-of-type(5n+4) a {
+        border-color: #1ab1ff;
+      }
+
+      &:nth-of-type(4n+4) .slide:hover, &:nth-of-type(5n+4) a:hover {
+        color: #0076b3;
+      }
+    }
+  }
+
+  a, label {
+    transition-property: color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
+  }
+
+  .slide {
+    padding: 10px 10px;
+    font-size: 1em;
+    display: block;
+    color: #393939;
+    border-top: 6px solid transparent;
+    position: relative;
+    transition-property: border-width, color;
+    transition-duration: 0.1s, 0.2s;
+    transition-timing-function: ease-in;
+    transition-delay: 0.2s, 0s;
+
+    .element {
+      font-size: 1.25em;
+      font-weight: 600;
+      font-style: normal;
+      display: block;
+      line-height: 1;
+    }
+
+    .name {
+      font-size: 0.6875em;
+      position: relative;
+    }
+  }
+}
+
+.masthead {
+  font-family: "Open Sans", sans-serif;
+
+  .brand-container {
+    padding: 10px;
+    background-color: #393939;
+
+    a {
+      color: white;
+      display: inline-block;
+      transition-property: all;
+      transition-duration: 0.2s;
+      transition-timing-function: ease-in;
+
+      &:hover {
+        color: #8cc63f;
+      }
+    }
+  }
+
+  .brand-initials {
+    font-size: 3.0625em;
+    font-weight: 700;
+    font-style: normal;
+    display: block;
+    line-height: 42px;
+  }
+
+  .brand-name {
+    font-size: 0.8125em;
+    text-indent: 3px;
+    display: block;
+  }
+}

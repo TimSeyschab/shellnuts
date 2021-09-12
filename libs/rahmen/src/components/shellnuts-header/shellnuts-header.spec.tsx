@@ -2,27 +2,40 @@ import { newSpecPage } from '@stencil/core/testing';
 import { ShellnutsHeader } from './shellnuts-header';
 
 describe('shellnuts-header', () => {
-  it('renders', async () => {
-    const { root } = await newSpecPage({
+  it('renders with default values', async () => {
+    const {root} = await newSpecPage({
       components: [ShellnutsHeader],
-      html: '<shellnuts-header></shellnuts-header>',
+      html: '<shellnuts-header default></shellnuts-headerdefault>'
     });
-    expect(root).toEqualHtml(`
-      <shellnuts-header>
-        <mock:shadow-root>
-          <div>
-            Hello, World! I'm
-          </div>
-        </mock:shadow-root>
-      </shellnuts-header>
-    `);
+    expect(root).toMatchSnapshot();
   });
 
-  it('renders with values', async () => {
-    const { root } = await newSpecPage({
+  it('renders with provided values', async () => {
+    const headerProp = {
+      urlList: [
+        {
+          url: "/index.html",
+          shortName: "In",
+          longName: "Index"
+        },
+        {
+          url: "/path/to/page.html",
+          shortName: "Pg",
+          longName: "Page"
+        }
+      ]
+    }
+
+    const page = await newSpecPage({
       components: [ShellnutsHeader],
-      html: `<shellnuts-header first="Stencil" last="'Don't call me a framework' JS"></shellnuts-header>`,
+      html: `<div></div>`
     });
-    expect(root).toMatchSnapshot()
+
+    let component = page.doc.createElement("shellnuts-header");
+    (component as any).headerProp = headerProp;
+    page.root.appendChild(component);
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot()
   });
 });

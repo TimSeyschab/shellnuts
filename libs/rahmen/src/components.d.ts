@@ -7,18 +7,6 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface ShellnutsFooter {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
     }
     interface ShellnutsHeader {
         /**
@@ -33,6 +21,10 @@ export namespace Components {
           * The middle name
          */
         "middle": string;
+    }
+    interface ShellnutsModal {
+        "title": string;
+        "visible": boolean;
     }
 }
 declare global {
@@ -48,25 +40,20 @@ declare global {
         prototype: HTMLShellnutsHeaderElement;
         new (): HTMLShellnutsHeaderElement;
     };
+    interface HTMLShellnutsModalElement extends Components.ShellnutsModal, HTMLStencilElement {
+    }
+    var HTMLShellnutsModalElement: {
+        prototype: HTMLShellnutsModalElement;
+        new (): HTMLShellnutsModalElement;
+    };
     interface HTMLElementTagNameMap {
         "shellnuts-footer": HTMLShellnutsFooterElement;
         "shellnuts-header": HTMLShellnutsHeaderElement;
+        "shellnuts-modal": HTMLShellnutsModalElement;
     }
 }
 declare namespace LocalJSX {
     interface ShellnutsFooter {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
     }
     interface ShellnutsHeader {
         /**
@@ -82,9 +69,18 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface ShellnutsModal {
+        /**
+          * The last name
+         */
+        "onClicked"?: (event: CustomEvent<boolean>) => void;
+        "title"?: string;
+        "visible"?: boolean;
+    }
     interface IntrinsicElements {
         "shellnuts-footer": ShellnutsFooter;
         "shellnuts-header": ShellnutsHeader;
+        "shellnuts-modal": ShellnutsModal;
     }
 }
 export { LocalJSX as JSX };
@@ -93,6 +89,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "shellnuts-footer": LocalJSX.ShellnutsFooter & JSXBase.HTMLAttributes<HTMLShellnutsFooterElement>;
             "shellnuts-header": LocalJSX.ShellnutsHeader & JSXBase.HTMLAttributes<HTMLShellnutsHeaderElement>;
+            "shellnuts-modal": LocalJSX.ShellnutsModal & JSXBase.HTMLAttributes<HTMLShellnutsModalElement>;
         }
     }
 }

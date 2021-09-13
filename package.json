@@ -13,13 +13,15 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.1202.5",
     "@nrwl/cli": "12.9.0",
     "@nrwl/eslint-plugin-nx": "12.9.0",
     "@nrwl/jest": "12.9.0",
     "@nrwl/linter": "12.9.0",
+    "@nrwl/storybook": "^12.9.0",
     "@nrwl/tao": "12.9.0",
     "@nrwl/workspace": "12.9.0",
-    "@nrwl/storybook": "^12.9.0",
+    "@nx-python/nx-python": "^1.0.3",
     "@nxext/stencil": "^12.1.2",
     "@playwright/test": "^1.14.1",
     "@stencil/core": "2.6.0",

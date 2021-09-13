@@ -13,7 +13,9 @@
       "targets": {
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "projectType": "library",
             "tsConfig": "libs/rahmen/tsconfig.lib.json",
@@ -37,7 +39,9 @@
         },
         "build": {
           "executor": "@nxext/stencil:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "projectType": "library",
             "tsConfig": "libs/rahmen/tsconfig.lib.json",
@@ -53,7 +57,9 @@
         },
         "serve": {
           "executor": "@nxext/stencil:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "projectType": "library",
             "tsConfig": "libs/rahmen/tsconfig.lib.json",
@@ -77,7 +83,9 @@
       "targets": {
         "build": {
           "executor": "@nxext/stencil:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "projectType": "application",
             "tsConfig": "apps/shellnuts/tsconfig.app.json",
@@ -93,7 +101,9 @@
         },
         "serve": {
           "executor": "@nxext/stencil:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "projectType": "application",
             "tsConfig": "apps/shellnuts/tsconfig.app.json",
@@ -105,7 +115,9 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "projectType": "application",
             "tsConfig": "apps/shellnuts/tsconfig.app.json",
@@ -115,7 +127,10 @@
         },
         "e2e": {
           "executor": "@nrwl/workspace:run-commands",
-          "outputs": ["{options.outputPath}/www", "apps/shellnuts/reports"],
+          "outputs": [
+            "{options.outputPath}/www",
+            "apps/shellnuts/reports"
+          ],
           "options": {
             "commands": [
               "npx playwright test -c apps/shellnuts/playwright.config.ts"
@@ -126,9 +141,49 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/shellnuts/**/*.{ts,tsx}"]
+            "lintFilePatterns": [
+              "apps/shellnuts/**/*.{ts,tsx}"
+            ]
+          }
+        }
+      }
+    },
+    "rezepte-parser": {
+      "projectType": "application",
+      "root": "apps/rezepte-parser",
+      "sourceRoot": "apps/rezepte-parser/src",
+      "targets": {
+        "build": {
+          "executor": "@nx-python/nx-python:build",
+          "options": {
+            "outputPath": "dist\\apps\\rezepte-parser",
+            "main": "apps\\rezepte-parser\\src\\hello.py",
+            "templateType": "default"
+          }
+        },
+        "serve": {
+          "executor": "@nx-python/nx-python:serve",
+          "options": {
+            "main": "apps\\rezepte-parser\\src\\hello.py",
+            "templateType": "default"
+          }
+        },
+        "test": {
+          "executor": "@nx-python/nx-python:test",
+          "options": {
+            "main": "apps\\rezepte-parser\\src\\test_hello.py",
+            "templateType": "default"
+          }
+        },
+        "lint": {
+          "executor": "@nx-python/nx-python:lint",
+          "options": {
+            "main": "apps\\rezepte-parser\\src\\hello.py",
+            "templateType": "default"
           }
         }
       }

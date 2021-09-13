@@ -13,7 +13,21 @@
   </head>
   <body>
   <shellnuts-header default></shellnuts-header>
-  Dies ist nur ein Test!
+  <div id="content"></div>
   <shellnuts-footer></shellnuts-footer>
   </body>
+
+  <script>
+    card = {
+      titel: 'test',
+      author: 'tim',
+      text: ['Dies ist ein Test', 'der Grundfunktionen']
+    }
+
+    let component = document.createElement("shellnuts-card")
+    component.shellnutsCardProp = card
+    document.getElementById('content').appendChild(
+      component
+    )
+  </script>
 </html>

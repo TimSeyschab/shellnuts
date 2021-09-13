@@ -5,8 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ShellnutsCardProp } from "./components/shellnuts-card/shellnuts-card";
 import { ShellnutsHeaderProps } from "./components/shellnuts-header/shellnuts-header";
 export namespace Components {
+    interface ShellnutsCard {
+        "cardProp": ShellnutsCardProp;
+    }
     interface ShellnutsFooter {
     }
     interface ShellnutsHeader {
@@ -19,6 +23,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLShellnutsCardElement extends Components.ShellnutsCard, HTMLStencilElement {
+    }
+    var HTMLShellnutsCardElement: {
+        prototype: HTMLShellnutsCardElement;
+        new (): HTMLShellnutsCardElement;
+    };
     interface HTMLShellnutsFooterElement extends Components.ShellnutsFooter, HTMLStencilElement {
     }
     var HTMLShellnutsFooterElement: {
@@ -38,12 +48,16 @@ declare global {
         new (): HTMLShellnutsModalElement;
     };
     interface HTMLElementTagNameMap {
+        "shellnuts-card": HTMLShellnutsCardElement;
         "shellnuts-footer": HTMLShellnutsFooterElement;
         "shellnuts-header": HTMLShellnutsHeaderElement;
         "shellnuts-modal": HTMLShellnutsModalElement;
     }
 }
 declare namespace LocalJSX {
+    interface ShellnutsCard {
+        "cardProp"?: ShellnutsCardProp;
+    }
     interface ShellnutsFooter {
     }
     interface ShellnutsHeader {
@@ -59,6 +73,7 @@ declare namespace LocalJSX {
         "visible"?: boolean;
     }
     interface IntrinsicElements {
+        "shellnuts-card": ShellnutsCard;
         "shellnuts-footer": ShellnutsFooter;
         "shellnuts-header": ShellnutsHeader;
         "shellnuts-modal": ShellnutsModal;
@@ -68,6 +83,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "shellnuts-card": LocalJSX.ShellnutsCard & JSXBase.HTMLAttributes<HTMLShellnutsCardElement>;
             "shellnuts-footer": LocalJSX.ShellnutsFooter & JSXBase.HTMLAttributes<HTMLShellnutsFooterElement>;
             "shellnuts-header": LocalJSX.ShellnutsHeader & JSXBase.HTMLAttributes<HTMLShellnutsHeaderElement>;
             "shellnuts-modal": LocalJSX.ShellnutsModal & JSXBase.HTMLAttributes<HTMLShellnutsModalElement>;

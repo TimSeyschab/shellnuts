@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shellnuts-card renders with provided values 1`] = `
+<shellnuts-card>
+  <mock:shadow-root>
+    <div class="card">
+      <div class="card-title-block">
+        <div class="card-title">
+          <div class="card-val">
+            Titel für den Test
+          </div>
+        </div>
+        <div class="card-author">
+          <div class="card-val">
+            <span class="mu mu-user"></span>
+            Testuser
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-val">
+          <p>
+            Dies ist ein Test
+          </p>
+          <p>
+            des Card Modules
+          </p>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</shellnuts-card>
+`;

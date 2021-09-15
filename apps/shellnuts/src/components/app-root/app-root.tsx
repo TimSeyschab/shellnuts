@@ -9,9 +9,7 @@ export class AppRoot {
   render() {
     return (
       <div>
-        <header>
-          <h1>Stencil App Starter</h1>
-        </header>
+        <shellnuts-header default/>
 
         <main>
           <stencil-router>
@@ -21,6 +19,8 @@ export class AppRoot {
             </stencil-route-switch>
           </stencil-router>
         </main>
+
+        <shellnuts-footer/>
       </div>
     );
   }

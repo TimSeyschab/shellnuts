@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx run shellnuts:serve",
+    "start:backend": "cargo run --target-dir dist/apps/shellnuts-backend apps/shellnuts-backend ",
     "build": "nx build",
     "test": "nx test",
     "postinstall": "playwright install"
@@ -23,6 +24,7 @@
     "@nrwl/workspace": "12.9.0",
     "@nx-python/nx-python": "^1.0.3",
     "@nxext/stencil": "^12.1.2",
+    "@nxrs/cargo": "^0.3.1",
     "@playwright/test": "^1.14.1",
     "@stencil/core": "2.6.0",
     "@stencil/eslint-plugin": "0.3.1",
@@ -40,7 +42,6 @@
     "jest-cli": "26.6.3",
     "prettier": "^2.3.1",
     "ts-jest": "26.5.6",
-    "typescript": "~4.3.5",
-    "@shellnuts/rahmen": "file://./dist/libs/rahmen/shellnuts-rahmen-0.0.1.tgz"
+    "typescript": "~4.3.5"
   }
 }

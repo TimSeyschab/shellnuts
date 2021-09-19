@@ -9,7 +9,7 @@ export class AppRoot {
   render() {
     return (
       <div>
-        <shellnuts-header default/>
+        <shellnuts-header default={true}/>
 
         <main>
           <stencil-router>

@@ -12,7 +12,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "jsx": "react",
-    "jsxFactory": "h"
+    "jsxFactory": "h",
+    "paths": {
+      "@shellnuts/rahmen": [ "<rootDir>/../../libs/rahmen/src" ]
+    }
   },
   "include": [],
   "references": [

@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`app-root renders with footer and modal 1`] = `
+<app-root>
+  <mock:shadow-root>
+    <div>
+      <shellnuts-header default=""></shellnuts-header>
+      <main>
+        <stencil-router>
+          <stencil-route-switch scrolltopoffset="0">
+            <stencil-route component="app-home" exact="" url="/"></stencil-route>
+            <stencil-route component="app-profile" url="/profile/:name"></stencil-route>
+          </stencil-route-switch>
+        </stencil-router>
+      </main>
+      <shellnuts-footer>
+        <mock:shadow-root>
+          <div class="sitefooter">
+            <div class="footerlarge"></div>
+            <div class="footersmall">
+              <button class="impressum">
+                Impressum
+              </button>
+            </div>
+          </div>
+          <shellnuts-modal>
+            <mock:shadow-root>
+              <div class="wrapper">
+                <div class="modal">
+                  <span class="title">
+                    Impressum
+                  </span>
+                  <div class="content">
+                    <slot></slot>
+                  </div>
+                  <div class="button-container">
+                    <button class="ok">
+                      Okay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mock:shadow-root>
+            <div style="color: black; margin: 0 10px;">
+              <h1>
+                Impressum
+              </h1>
+              <p>
+                Angaben gemäß § 5 TMG
+              </p>
+              <p>
+                Tim Seyschab
+                <br>
+                Wiesenstraße 9
+                <br>
+                90443 Nürnberg
+                <br>
+              </p>
+              <p>
+                <strong>
+                  Vertreten durch:
+                </strong>
+                <br>
+                Tim Seyschab
+                <br>
+              </p>
+              <p>
+                <strong>
+                  Kontakt:
+                </strong>
+                <br>
+                E-Mail:
+                <a href="mailto:webadmin@shellnuts.de">
+                  webadmin@shellnuts.de
+                </a>
+                <br>
+              </p>
+              <p>
+                <strong>
+                  Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
+                </strong>
+                <br>
+                Tim Seyschab
+                <br>
+                Wiesenstraße 9
+                <br>
+                90443 Nürnberg
+                <br>
+              </p>
+              <p>
+                <strong>
+                  Haftungsausschluss:
+                </strong>
+                <br>
+                <br>
+                <strong>
+                  Haftung für Links
+                </strong>
+                <br>
+                <br>
+                Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
+              </p>
+            </div>
+          </shellnuts-modal>
+        </mock:shadow-root>
+      </shellnuts-footer>
+    </div>
+  </mock:shadow-root>
+</app-root>
+`;
+
+exports[`app-root renders with header 1`] = `
+<app-root>
+  <mock:shadow-root>
+    <div>
+      <shellnuts-header>
+        <mock:shadow-root>
+          <header class="masthead">
+            <div class="brand-container">
+              <a href="#">
+                <span class="brand-initials">
+                  SN
+                </span>
+                <span class="brand-name">
+                  Shellnuts
+                </span>
+              </a>
+            </div>
+            <nav>
+              <div class="nav-container">
+                <div>
+                  <a class="slide" href="/index.html">
+                    <span class="element">
+                      Hm
+                    </span>
+                    <span class="name">
+                      Home
+                    </span>
+                  </a>
+                </div>
+                <div>
+                  <a class="slide" href="/pages/rezepte/rezepte.html">
+                    <span class="element">
+                      Rzp
+                    </span>
+                    <span class="name">
+                      Rezepte
+                    </span>
+                  </a>
+                </div>
+                <div>
+                  <a class="slide" href="/pages/artikel/artikel.html">
+                    <span class="element">
+                      At
+                    </span>
+                    <span class="name">
+                      Artikel
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </nav>
+          </header>
+        </mock:shadow-root>
+      </shellnuts-header>
+      <main>
+        <stencil-router>
+          <stencil-route-switch scrolltopoffset="0">
+            <stencil-route component="app-home" exact="" url="/"></stencil-route>
+            <stencil-route component="app-profile" url="/profile/:name"></stencil-route>
+          </stencil-route-switch>
+        </stencil-router>
+      </main>
+      <shellnuts-footer></shellnuts-footer>
+    </div>
+  </mock:shadow-root>
+</app-root>
+`;

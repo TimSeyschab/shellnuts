@@ -14,13 +14,13 @@ mod state {
     pub(crate) mod elastic;
 }
 /// Module that needs initialisation on startup and a living state.
-mod routes {
+mod utils {
     pub(crate) mod create;
 }
 
-#[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
+/// Module that needs initialisation on startup and a living state.
+mod repo {
+    pub(crate) mod repository;
 }
 
 #[rocket::main]
@@ -32,7 +32,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let app_state = App::new().await;
 
-    routes::create::create(&app_state.elasticsearch).await?;
+    utils::create::create(&app_state.elasticsearch).await?;
 
     rocket::build()
         .mount("/", routes![index])
@@ -45,6 +45,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 struct App {
     elasticsearch: Elasticsearch,
+    index: &'static str,
 }
 
 type AppState<'a> = State<App>;
@@ -52,12 +53,18 @@ type AppState<'a> = State<App>;
 impl App {
     async fn new() -> Self {
         let elasticsearch = state::elastic::new().await;
-        Self { elasticsearch }
+        Self {
+            elasticsearch,
+            index: "rezept",
+        }
     }
 }
 
 impl WithElastic for AppState<'_> {
     fn elasticsearch(&self) -> &Elasticsearch {
         &self.elasticsearch
+    }
+    fn index(&self) -> &str {
+        &self.index
     }
 }

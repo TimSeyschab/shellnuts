@@ -3,6 +3,7 @@ use log::info;
 
 pub(crate) trait WithElastic {
     fn elasticsearch(&self) -> &Elasticsearch;
+    fn index(&self) -> &str;
 }
 
 ///

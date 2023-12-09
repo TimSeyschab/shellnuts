@@ -5,7 +5,7 @@ date: 2023-12-09
 
 Who doesn't know the feeling? It's almost 4 o'clock, and you decide to quickly switch to a new major version of [SpringBoot](https://spring.io/projects/spring-boot), only to end up wasting time on a trivial issue.
 
-## It always starts so easy
+## Necessary changes
 
 Since the application is still running on Java 11, you inevitably decide to migrate directly to Java 17.
 
@@ -35,9 +35,9 @@ Some might forget that there's also an external system test that is not so forgi
 
 The migration guide also suggests replacing javax with jakarta packages. A Ctrl+R later, you realize better not to rename the SE packages.
 
-Up to this point, everything is smooth.
+Up to this point, everything is running smoothly.
 
-## Well obviously it breaks
+## Until it isn't
 
 Thinking you've conquered the issue, you run the failsafe tests and are surprised by the following error:
 
@@ -59,7 +59,7 @@ Lo and behold, the test passes 👍.
 [INFO] -----------------------------------------------
 ```
 
-## And obviously that wasn't the solution
+## Obviously that wasn't the solution
 
 Trying to start the whole thing, you are met with the disillusioning realization:
 

@@ -1,8 +1,6 @@
 <script>
-    const wait = () => new Promise((res) => setTimeout(res, 3000))
+    const wait = () => new Promise((res) => setTimeout(res, 1000))
     let stageOne = false;
-    let stageTwo = false;
-    let stageThree = false;
 
     /**
      * Custom Svelte transition for typewriter effect on text nodes.
@@ -38,15 +36,8 @@
             <pre data-prefix="λ"><code transition:typewriter
                                        on:introend={() => (stageOne = true)}>npm i shellnuts</code></pre>
             {#if stageOne === true}
-                <pre data-prefix="λ"><code class="text-error" transition:typewriter
-                                           on:introend={() => (stageTwo = true)}>npm ERR! code E404</code></pre>
-            {/if}
-            {#if stageTwo === true}
-                <pre data-prefix="λ"><code class="text-error"  transition:typewriter
-                                           on:introend={() => (stageThree = true)}>npm ERR! 404  'shellnuts' is not in this registry.</code></pre>
-            {/if}
-            {#if stageThree === true}
-                <pre data-prefix="λ"><code class="text-success" transition:typewriter>🤖 shellnuts will be available soon.</code></pre>
+                <pre data-prefix="λ"><code class="text-success">up to date, audited 393 packages in 1s</code></pre>
+              <pre data-prefix="λ"><code class="text-success">🤖 While you're here check out the <a class="link-secondary underline" href="./blog">blog</a></code></pre>
             {/if}
         </div>
     {/await}

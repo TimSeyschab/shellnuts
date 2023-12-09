@@ -7,7 +7,7 @@ import { vitePreprocess } from "@sveltejs/kit/vite";
 const config = {
 	extensions: ['.svelte', ...mdsvexConfig.extensions],
 	kit: {
-		adapter: adapter({ runtime: 'nodejs18.x' }),
+		adapter: adapter({ runtime: 'edge' }),
 		inlineStyleThreshold: 5000
 	},
 	preprocess:[ vitePreprocess(), mdsvex(mdsvexConfig)]

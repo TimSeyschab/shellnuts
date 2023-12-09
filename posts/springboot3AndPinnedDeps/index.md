@@ -74,7 +74,7 @@ The same error.
 
 Okay, time for analysis:
 
-### Where does slf4j-api dependency originate from?
+### The origin of the slf4j-api transitive dependency
 
 ```bash
 $ mvn dependency:tree -Dincludes=org.slf4j:sl4j-api
@@ -86,7 +86,7 @@ $ mvn dependency:tree -Dincludes=org.slf4j:sl4j-api
 [INFO]       \- org.slf4j:slf4j-api:jar:1.7.1:compile
 ```
 
-So far, so bad. How can it be that spring-boot-starter-logging brings a dependency that breaks the application?
+So far, so bad. How can it be that spring-boot-starter-logging includes a dependency that breaks the application?
 
 The spring-boot-starter-logging dependency depends on three libraries:
 

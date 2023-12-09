@@ -99,7 +99,7 @@ All of them specify in their parent POM the slf4j-api version **2.0.7**... Wait 
 If **2.0.7** is the correct version and there is no other dependency overwriting it, 
 then there can only be one person setting it differently ...
 
-![well of course I know him, He's me](./wellIknowhm.jpg)
+![well of course I know him, He's me](./wellIknowhm.webp)
 
 And obviously, in the properties in the POM, happily snuggling between a lot of other configurations, a little fixed version number:
 

@@ -1,6 +1,6 @@
 <div class="h-screen">
-	<div class="max-w-md mx-auto rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3 p-6">
-		<article class="prose lg:prose-xl">
+	<div class="items-center justify-center">
+		<article class="prose lg:prose-xl mx-auto rounded-xl shadow-md overflow-hidden p-3">
 		<h2 class="text-2xl font-bold">About Shellnuts</h2>
 		<p class="mt-4">
 			Hey there! 👋

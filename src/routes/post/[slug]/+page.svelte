@@ -43,7 +43,7 @@
 			<svelte:component this={data.component} />
 		</article>
 
-		<div class="ml-8">
+		<div class="hidden md:block ml-8">
 			<aside class="sticky top-10" aria-label="Table of Contents">
 				<PostNav post={data.post} />
 			</aside>

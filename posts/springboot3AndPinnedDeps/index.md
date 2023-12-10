@@ -3,7 +3,7 @@ title: SpringBoot3 and pinned versions
 date: 2023-12-09
 ---
 
-Who doesn't know the feeling? It was thursday, almost 4 o'clock, so I decided to quickly switch to a new major version
+Who doesn't know the feeling? It was Thursday, almost 4 o'clock, so I decided to quickly switch to a new major version
 of [SpringBoot](https://spring.io/projects/spring-boot), only to end up wasting time on a trivial issue.
 
 ## Necessary changes

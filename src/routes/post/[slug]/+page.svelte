@@ -1,13 +1,15 @@
 <script>
-		/** @type {import('./$types').PageData} */
+	import PostNav from '$lib/components/ContentNav.svelte';
+
+	/** @type {import('./$types').PageData} */
 	export let data;
-	const website = 'https://shellnuts.de'
-	const url = `${website}/post/${data.post.slug}`
+	const website = 'https://shellnuts.de';
+	const url = `${website}/post/${data.post.slug}`;
 	// generated open-graph image for sharing on social media.
 	// see https://og-image.vercel.app/ for more options.
 	const ogImage = `https://og-image.vercel.app/**${encodeURIComponent(
 		data.post.title
-	)}**?theme=light&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fhyper-color-logo.svg`
+	)}**?theme=light&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fhyper-color-logo.svg`;
 </script>
 
 <svelte:head>
@@ -32,11 +34,19 @@
 </svelte:head>
 
 <div class="h-screen">
-	<article class="prose lg:prose-xl mx-auto rounded-xl shadow-md overflow-hidden p-3 mb-20">
-		<h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
-			{data.post.title}
-		</h1>
-		<!-- render the post -->
-		<svelte:component this={data.component} />
-	</article>
+	<div class="flex justify-center">
+		<article class="prose lg:prose-xl rounded-xl overflow-hidden p-3 mb-20">
+			<h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
+				{data.post.title}
+			</h1>
+			<!-- render the post -->
+			<svelte:component this={data.component} />
+		</article>
+
+		<div class="ml-8">
+			<aside class="sticky top-10" aria-label="Table of Contents">
+				<PostNav post={data.post} />
+			</aside>
+		</div>
+	</div>
 </div>

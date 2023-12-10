@@ -29,19 +29,24 @@
 </script>
 
 <div class="h-screen flex items-center justify-center">
-    {#await wait()}
-        <span class="loading loading-spinner text-secondary w-20">Loading</span>
-    {:then _}
-        <div class="mockup-code">
+	{#await wait()}
+		<span class="loading loading-spinner text-secondary w-20">Loading</span>
+	{:then _}
+		<div class="mockup-code">
             <pre data-prefix="λ"><code transition:typewriter
-                                       on:introend={() => (stageOne = true)}>npm i shellnuts</code></pre>
-            {#if stageOne === true}
-                <pre data-prefix="λ"><code class="text-success">up to date, audited 393 packages in 1s</code></pre>
-              <pre data-prefix="λ"><code class="text-success">🤖 While you're here check out the <a class="link-secondary underline" href="./blog">blog</a></code></pre>
-            {/if}
-        </div>
-    {/await}
+																			 on:introend={() => (stageOne = true)}>npm install -g shellnuts</code></pre>
+			{#if stageOne === true}
+				<pre data-prefix="λ"><code class="text-success">up to date, audited 1 package in 1s</code></pre>
+				<pre data-prefix="λ"><code class="text-success">Check out the <a class="link-secondary underline" href="./blog">blog</a> 🤖</code></pre>
+			{/if}
+		</div>
+	{/await}
 </div>
 
-
+<style>
+	.mockup-code {
+			width: 80rem;
+			height: 9rem
+	}
+</style>
 

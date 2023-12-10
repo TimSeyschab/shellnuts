@@ -45,7 +45,7 @@
 
 <style>
 	.mockup-code {
-			width: 80rem;
+			width: 24rem;
 			height: 9rem
 	}
 </style>

@@ -1,18 +1,31 @@
-<script>
-	/**
-	 * @type {any}
-	 */
+<script lang='ts'>
 	export let posts;
+
+	function callLink(event: UIEvent) {
+		const isTextSelected = window?.getSelection()?.toString();
+		if (!isTextSelected && event.target instanceof HTMLElement) {
+			let parent = event.target.closest('.card');
+			(parent?.querySelector('.main-link') as HTMLAnchorElement).click();
+		}
+	}
 </script>
 
 {#each posts as post}
-	<div class="card w-96 bg-base-100 shadow-xl">
+	<div class="card w-96 bg-secondary-content shadow-xl" role="button" tabindex="0" on:click={el => callLink(el)}
+			 on:keydown={el => callLink(el)}>
 		<div class="card-body">
-			<h2 class="card-title">{post.date}: {post.title}</h2>
+			<h2 class="card-title">
+				<a class="main-link" href={`/post/${post.slug}`}>{post.date}: {post.title}</a>
+			</h2>
 			{@html post.preview.html}
 			<div class="card-actions justify-end">
-				<a class="btn btn-primary" href={`/post/${post.slug}`}>Read now</a>
 			</div>
 		</div>
 	</div>
 {/each}
+
+<style>
+    :global(.card-body p a) {
+        text-decoration: underline;
+    }
+</style>

@@ -1,5 +1,5 @@
 <script lang='ts'>
-	export let posts;
+	let { posts } = $props();
 
 	function callLink(event: UIEvent) {
 		const isTextSelected = window?.getSelection()?.toString();
@@ -11,8 +11,8 @@
 </script>
 
 {#each posts as post}
-	<div class="card w-96 bg-secondary-content shadow-xl" role="button" tabindex="0" on:click={el => callLink(el)}
-			 on:keydown={el => callLink(el)}>
+	<div class="card w-96 bg-secondary-content shadow-xl" role="button" tabindex="0" onclick={el => callLink(el)}
+			 onkeydown={el => callLink(el)}>
 		<div class="card-body">
 			<h2 class="card-title">
 				<a class="main-link" href={`/post/${post.slug}`}>{post.date}: {post.title}</a>

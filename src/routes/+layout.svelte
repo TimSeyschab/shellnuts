@@ -3,10 +3,17 @@
 	import '../prism.css'
 	import '@fontsource-variable/source-code-pro';
 	import Headers from '$lib/components/Headers.svelte';
+	/**
+	 * @typedef {Object} Props
+	 * @property {import('svelte').Snippet} [children]
+	 */
+
+	/** @type {Props} */
+	let { children } = $props();
 </script>
 
 <Headers />
-<slot />
+{@render children?.()}
 
 <style>
     :global(body) {

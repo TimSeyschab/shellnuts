@@ -1,8 +1,14 @@
 <script>
 	import PostNav from '$lib/components/ContentNav.svelte';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	
+	/**
+	 * @typedef {Object} Props
+	 * @property {import('./$types').PageData} data
+	 */
+
+	/** @type {Props} */
+	let { data } = $props();
 	const website = 'https://shellnuts.de';
 	const url = `${website}/post/${data.post.slug}`;
 	// generated open-graph image for sharing on social media.
@@ -40,7 +46,7 @@
 				{data.post.title}
 			</h1>
 			<!-- render the post -->
-			<svelte:component this={data.component} />
+			<data.component />
 		</article>
 
 		<div class="hidden md:block ml-8">

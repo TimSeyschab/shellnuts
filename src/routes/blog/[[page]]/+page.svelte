@@ -1,8 +1,14 @@
 <script>
 	import PostsList from '$lib/components/PostList.svelte';
 
-	/** @type {any} */
-	export let data;
+	
+	/**
+	 * @typedef {Object} Props
+	 * @property {any} data
+	 */
+
+	/** @type {Props} */
+	let { data } = $props();
 </script>
 
 <div class="h-screen">

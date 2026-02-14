@@ -2,17 +2,23 @@
 	import { browser } from '$app/environment'
 	import { onMount } from 'svelte'
 
-	/** @type {any} */ export let post
+	/**
+	 * @typedef {Object} Props
+	 * @property {any} post
+	 */
+
+	/** @type {Props} */
+	let { post } = $props();
 
 	/** @type {HTMLElement[]} */ let elements = []
-	let headings = post.headings
+	let headings = $state(post.headings)
 
 	onMount(() => {
 		updateHeadings()
 		setActiveHeading()
 	})
 
-	let activeHeading = headings[0]
+	let activeHeading = $state(headings[0])
 	/** @type {number} */ let scrollY
 
 	function updateHeadings() {
@@ -44,7 +50,7 @@
 	}
 </script>
 
-<svelte:window on:scroll={setActiveHeading} />
+<svelte:window onscroll={setActiveHeading} />
 
 <div>
 		<ul class="menu w-56 rounded-box">

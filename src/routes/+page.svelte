@@ -1,6 +1,6 @@
 <script>
     const wait = () => new Promise((res) => setTimeout(res, 1000))
-    let stageOne = false;
+    let stageOne = $state(false);
 
     /**
      * Custom Svelte transition for typewriter effect on text nodes.
@@ -34,7 +34,7 @@
 	{:then _}
 		<div class="mockup-code">
             <pre data-prefix="λ"><code transition:typewriter
-																			 on:introend={() => (stageOne = true)}>npm install -g shellnuts</code></pre>
+																			 onintroend={() => (stageOne = true)}>npm install -g shellnuts</code></pre>
 			{#if stageOne === true}
 				<pre data-prefix="λ"><code class="text-success">up to date, audited 1 package in 1s</code></pre>
 				<pre data-prefix="λ"><code class="text-success">Check out the <a class="link-secondary underline" href="./blog">blog</a> 🤖</code></pre>

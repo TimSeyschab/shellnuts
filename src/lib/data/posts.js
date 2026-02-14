@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import { format } from 'date-fns';
-import { parse } from 'node-html-parser'
+import { parse } from 'node-html-parser';
+import { render } from 'svelte/server';
 
 // we require some server-side APIs to parse all metadata
 if (browser) {
@@ -10,8 +11,8 @@ if (browser) {
 // Get all posts and add metadata
 export const posts = Object.entries(import.meta.glob('/posts/**/*.md', { eager: true }))
 	.map(([filepath, post]) => {
-		const html = parse(post.default.render().html)
-		const preview = post.metadata.preview ? parse(post.metadata.preview) : html.querySelector('p')
+		const html = parse(render(post.default).body);
+		const preview = post.metadata.preview ? parse(post.metadata.preview) : html.querySelector('p');
 
 		return {
 			...post.metadata,
@@ -20,8 +21,7 @@ export const posts = Object.entries(import.meta.glob('/posts/**/*.md', { eager: 
 				.split('/')
 				.pop(),
 			isIndexFile: filepath.endsWith('/index.md'),
-			date: post.metadata.date
-				? format(new Date(post.metadata.date), 'dd-MM-yyyy') : undefined,
+			date: post.metadata.date ? format(new Date(post.metadata.date), 'dd-MM-yyyy') : undefined,
 			preview: {
 				html: preview.toString(),
 				text: preview.structuredText ?? preview.toString()

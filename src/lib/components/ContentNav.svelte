@@ -1,6 +1,6 @@
 <script>
-	import { browser } from '$app/environment'
-	import { onMount } from 'svelte'
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 
 	/**
 	 * @typedef {Object} Props
@@ -10,41 +10,41 @@
 	/** @type {Props} */
 	let { post } = $props();
 
-	/** @type {HTMLElement[]} */ let elements = []
-	let headings = $state(post.headings)
+	/** @type {HTMLElement[]} */ let elements = [];
+	let headings = $state(post.headings);
 
 	onMount(() => {
-		updateHeadings()
-		setActiveHeading()
-	})
+		updateHeadings();
+		setActiveHeading();
+	});
 
-	let activeHeading = $state(headings[0])
-	/** @type {number} */ let scrollY
+	let activeHeading = $state(headings[0]);
+	/** @type {number} */ let scrollY;
 
 	function updateHeadings() {
-		headings = post.headings
+		headings = post.headings;
 
 		if (browser) {
 			elements = headings.map((heading) => {
-				return document.getElementById(heading.id)
-			})
+				return document.getElementById(heading.id);
+			});
 		}
 	}
 	function setActiveHeading() {
-		scrollY = window.scrollY
+		scrollY = window.scrollY;
 
 		const visibleIndex =
-			elements.findIndex((element) => element.offsetTop + element.clientHeight > scrollY) - 1
-		activeHeading = headings[visibleIndex]
+			elements.findIndex((element) => element.offsetTop + element.clientHeight > scrollY) - 1;
+		activeHeading = headings[visibleIndex];
 
-		const pageHeight = document.body.scrollHeight
-		const scrollProgress = (scrollY + window.innerHeight) / pageHeight
+		const pageHeight = document.body.scrollHeight;
+		const scrollProgress = (scrollY + window.innerHeight) / pageHeight;
 
 		if (!activeHeading) {
 			if (scrollProgress > 0.5) {
-				activeHeading = headings[headings.length - 1]
+				activeHeading = headings[headings.length - 1];
 			} else {
-				activeHeading = headings[0]
+				activeHeading = headings[0];
 			}
 		}
 	}
@@ -53,12 +53,12 @@
 <svelte:window onscroll={setActiveHeading} />
 
 <div>
-		<ul class="menu w-56 rounded-box">
-			<h2 class="menu-title">Content</h2>
-			{#each headings as heading}
-				<li>
-					<a class:active={activeHeading === heading} href={`#${heading.id}`}>{heading.value}</a>
-				</li>
-			{/each}
-		</ul>
+	<ul class="menu w-56 rounded-box">
+		<h2 class="menu-title">Content</h2>
+		{#each headings as heading}
+			<li>
+				<a class:active={activeHeading === heading} href={`#${heading.id}`}>{heading.value}</a>
+			</li>
+		{/each}
+	</ul>
 </div>

@@ -31,9 +31,9 @@ So, I started looking for their latest versions and happily made all the updates
 - some unsung git-commit-id plugin
 - etc
 
-To avoid any foreseeable issues, I carefully read through the migration guide and was glad to find out that 
+To avoid any foreseeable issues, I carefully read through the migration guide and was glad to find out that
 trailing slash matching has been [disabled by default](https://github.com/spring-projects/spring-framework/issues/28552).
-Accordingly, I adjusted the MVC tests. 
+Accordingly, I adjusted the MVC tests.
 
 At that moment, I overlooked an external system test that inconsistently uses exactly those trailing slashes.
 But that was a problem for the next day.
@@ -48,14 +48,14 @@ Up to this point, everything was running smoothly.
 Thinking I had conquered all issues, I ran the failsafe tests and was surprised by the following error:
 
 ```plaintext
-Caused by: java.lang.IllegalArgumentException: 
-LoggerFactory is not a Logback LoggerContext but Logback is on the classpath. 
-Either remove Logback or the competing implementation (class org.slf4j.helpers.NOPLoggerFactory loaded from file:/C:/Users/timse/.m2/repository/org/slf4j/slf4j-api/1.7.1/slf4j-api-1.7.1.jar). 
+Caused by: java.lang.IllegalArgumentException:
+LoggerFactory is not a Logback LoggerContext but Logback is on the classpath.
+Either remove Logback or the competing implementation (class org.slf4j.helpers.NOPLoggerFactory loaded from file:/C:/Users/timse/.m2/repository/org/slf4j/slf4j-api/1.7.1/slf4j-api-1.7.1.jar).
 If you are using WebLogic you will need to add 'org.slf4j' to prefer-application-packages in WEB-INF/weblogic.xml: org.slf4j.helpers.NOPLoggerFactory
 ```
 
 Honestly, why is it always the things you understand the least that break?
-I strongly believe that logging should be simple. 
+I strongly believe that logging should be simple.
 However, logging in Java can be many things, but it is certainly not simple.
 
 The initial suggestion from StackOverflow was to exclude "logback-classic" which didn't seem reasonable,
@@ -73,9 +73,9 @@ Much to my surprise, the test passed! 👍
 When I attempted to start the application, I was faced with a disheartening realization:
 
 ```plaintext
-Exception in thread "main" java.lang.IllegalArgumentException: 
-LoggerFactory is not a Logback LoggerContext but Logback is on the classpath. 
-Either remove Logback or the competing implementation (class org.slf4j.helpers.NOPLoggerFactory loaded from file:/C:/Users/timse/.m2/repository/org/slf4j/slf4j-api/1.7.1/slf4j-api-1.7.1.jar). 
+Exception in thread "main" java.lang.IllegalArgumentException:
+LoggerFactory is not a Logback LoggerContext but Logback is on the classpath.
+Either remove Logback or the competing implementation (class org.slf4j.helpers.NOPLoggerFactory loaded from file:/C:/Users/timse/.m2/repository/org/slf4j/slf4j-api/1.7.1/slf4j-api-1.7.1.jar).
 If you are using WebLogic you will need to add 'org.slf4j' to prefer-application-packages in WEB-INF/weblogic.xml: org.slf4j.helpers.NOPLoggerFactory
 ```
 
@@ -103,7 +103,7 @@ The spring-boot-starter-logging dependency relied on three libraries:
 - log4j-to-slf4j
 - jul-to-slf4j
 
-All of them had specified the slf4j-api version of **2.0.7** in their parent POM. 
+All of them had specified the slf4j-api version of **2.0.7** in their parent POM.
 On a closer look, something stood out!
 
 If **2.0.7** was the correct version and there was no other dependency overwriting it,
@@ -111,7 +111,7 @@ then there could only be one person causing the setting to be different...
 
 ![well of course I know him, He's me](./wellIknowhm.webp)
 
-Clearly, nestled among various other configurations in the properties within the POM, 
+Clearly, nestled among various other configurations in the properties within the POM,
 there was a little pinned version number:
 
 ```xml

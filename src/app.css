@@ -1,3 +1,6 @@
 /* tailwind setup */
-@import "tailwindcss";
+@import 'tailwindcss';
 @config "../tailwind.config.js";
+@plugin "daisyui" {
+    themes: garden --default, forest --prefersdark;
+}

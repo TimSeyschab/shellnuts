@@ -1,7 +1,6 @@
 <script>
 	import PostNav from '$lib/components/ContentNav.svelte';
 
-	
 	/**
 	 * @typedef {Object} Props
 	 * @property {import('./$types').PageData} data
@@ -21,7 +20,7 @@
 <svelte:head>
 	<title>{data.post.title} - Tim</title>
 	<meta name="description" content={data.post.preview.text} />
-	<meta name="author" content=Tim />
+	<meta name="author" content="Tim" />
 
 	<!-- Facebook Meta Tags -->
 	<meta property="og:url" content={url} />

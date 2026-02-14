@@ -1,7 +1,6 @@
 <script>
 	import PostsList from '$lib/components/PostList.svelte';
 
-	
 	/**
 	 * @typedef {Object} Props
 	 * @property {any} data

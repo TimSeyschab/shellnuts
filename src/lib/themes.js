@@ -1,4 +1,1 @@
-export const themes = [
-    'garden',
-    'forest'
-]
+export const themes = ['garden', 'forest'];

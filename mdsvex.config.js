@@ -1,7 +1,7 @@
-import relativeImages from "mdsvex-relative-images";
-import autolinkHeadings from 'rehype-autolink-headings'
-import remarkHeadings from '@vcarl/remark-headings'
-import slugPlugin from 'rehype-slug'
+import relativeImages from 'mdsvex-relative-images';
+import autolinkHeadings from 'rehype-autolink-headings';
+import remarkHeadings from '@vcarl/remark-headings';
+import slugPlugin from 'rehype-slug';
 
 export default {
 	extensions: ['.svx', '.md'],
@@ -17,17 +17,16 @@ export default {
 	]
 };
 
-
 /**
  * Parses headings and includes the result in metadata
  */
 function headings() {
 	return function transformer(tree, vfile) {
 		// run remark-headings plugin
-		remarkHeadings()(tree, vfile)
+		remarkHeadings()(tree, vfile);
 
 		// include the headings data in mdsvex frontmatter
-		vfile.data.fm ??= {}
+		vfile.data.fm ??= {};
 		vfile.data.fm.headings = vfile.data.headings.map((heading) => ({
 			...heading,
 			// slugify heading.value
@@ -35,6 +34,6 @@ function headings() {
 				.toLowerCase()
 				.replace(/\s/g, '-')
 				.replace(/[^a-z0-9-]/g, '')
-		}))
-	}
+		}));
+	};
 }

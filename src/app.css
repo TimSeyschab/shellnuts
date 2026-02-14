@@ -2,7 +2,9 @@
 @import 'tailwindcss';
 @config "../tailwind.config.js";
 @plugin "daisyui" {
-    themes: garden --default, forest --prefersdark;
+	themes:
+		garden --default,
+		forest --prefersdark;
 }
 
 html[data-theme='garden'] {

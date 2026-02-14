@@ -3,41 +3,50 @@
 	import { onMount } from 'svelte';
 
 	/**
+	 * @typedef {{ id: string, value: string }} Heading
 	 * @typedef {Object} Props
-	 * @property {any} post
+	 * @property {{ headings?: Heading[] }} post
 	 */
 
 	/** @type {Props} */
 	let { post } = $props();
 
-	/** @type {HTMLElement[]} */ let elements = [];
-	let headings = $state(post.headings);
+	/** @type {(HTMLElement | null)[]} */ let elements = [];
+	let headings = $derived(post.headings ?? []);
+	/** @type {Heading | undefined} */ let activeHeading = $state();
+	/** @type {number} */ let scrollY = $state(0);
+
+	$effect(() => {
+		updateHeadings();
+		if (!activeHeading && headings.length > 0) {
+			activeHeading = headings[0];
+		}
+	});
 
 	onMount(() => {
-		updateHeadings();
 		setActiveHeading();
 	});
 
-	let activeHeading = $state(headings[0]);
-	/** @type {number} */ let scrollY;
-
 	function updateHeadings() {
-		headings = post.headings;
-
 		if (browser) {
-			elements = headings.map((heading) => {
-				return document.getElementById(heading.id);
-			});
+			elements = headings.map((heading) => document.getElementById(heading.id));
 		}
 	}
+
 	function setActiveHeading() {
+		if (!browser || headings.length === 0) {
+			return;
+		}
+
 		scrollY = window.scrollY;
 
 		const visibleIndex =
-			elements.findIndex((element) => element.offsetTop + element.clientHeight > scrollY) - 1;
+			elements.findIndex(
+				(element) => element && element.offsetTop + element.clientHeight > scrollY
+			) - 1;
 		activeHeading = headings[visibleIndex];
 
-		const pageHeight = document.body.scrollHeight;
+		const pageHeight = document.body.scrollHeight || 1;
 		const scrollProgress = (scrollY + window.innerHeight) / pageHeight;
 
 		if (!activeHeading) {
@@ -55,7 +64,7 @@
 <div>
 	<ul class="menu w-56 rounded-box">
 		<h2 class="menu-title">Content</h2>
-		{#each headings as heading}
+		{#each headings as heading (heading.id)}
 			<li>
 				<a class:active={activeHeading === heading} href={`#${heading.id}`}>{heading.value}</a>
 			</li>

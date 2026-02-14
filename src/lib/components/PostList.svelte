@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+
 	let { posts } = $props();
 
 	function callLink(event: UIEvent) {
@@ -10,7 +12,7 @@
 	}
 </script>
 
-{#each posts as post}
+{#each posts as post (post.slug)}
 	<div
 		class="card w-96 bg-secondary-content shadow-xl"
 		role="button"
@@ -20,9 +22,9 @@
 	>
 		<div class="card-body">
 			<h2 class="card-title">
-				<a class="main-link" href={`/post/${post.slug}`}>{post.date}: {post.title}</a>
+				<a class="main-link" href={resolve(`/post/${post.slug}`)}>{post.date}: {post.title}</a>
 			</h2>
-			{@html post.preview.html}
+			<p>{post.preview.text}</p>
 			<div class="card-actions justify-end"></div>
 		</div>
 	</div>

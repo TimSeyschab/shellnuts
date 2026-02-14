@@ -1,4 +1,6 @@
 <script>
+	import { resolve } from '$app/paths';
+
 	const wait = () => new Promise((res) => setTimeout(res, 1000));
 	let stageOne = $state(false);
 
@@ -17,13 +19,14 @@
 
 		const text = node.textContent || '';
 		const duration = text.length / 0.01;
+		const tick = /** @param {number} t */ (t) => {
+			const i = ~~(text.length * t);
+			node.textContent = text.slice(0, i);
+		};
 
 		return {
 			duration,
-			tick: (t) => {
-				const i = ~~(text.length * t);
-				node.textContent = text.slice(0, i);
-			}
+			tick
 		};
 	}
 </script>
@@ -31,7 +34,7 @@
 <div class="h-screen flex items-center justify-center">
 	{#await wait()}
 		<span class="loading loading-spinner text-secondary w-20">Loading</span>
-	{:then _}
+	{:then}
 		<div class="mockup-code">
 			<pre data-prefix="λ"><code transition:typewriter onintroend={() => (stageOne = true)}
 					>npm install -g shellnuts</code
@@ -40,7 +43,8 @@
 				<pre data-prefix="λ"><code class="text-success">up to date, audited 1 package in 1s</code
 					></pre>
 				<pre data-prefix="λ"><code class="text-success"
-						>Check out the <a class="link-secondary underline" href="./blog">blog</a> 🤖</code
+						>Check out the <a class="link-secondary underline" href={resolve('/blog')}>blog</a
+						> 🤖</code
 					></pre>
 			{/if}
 		</div>

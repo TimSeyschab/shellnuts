@@ -3,34 +3,60 @@ import { format } from 'date-fns';
 import { parse } from 'node-html-parser';
 import { render } from 'svelte/server';
 
+/**
+ * @typedef {Object} PostMetadata
+ * @property {string} [title]
+ * @property {string} [date]
+ * @property {string} [preview]
+ * @property {Array<{ id: string, value: string }>} [headings]
+ */
+
+/**
+ * @typedef {Object} PostModule
+ * @property {import('svelte').Component<any>} default
+ * @property {PostMetadata} metadata
+ */
+
 // we require some server-side APIs to parse all metadata
 if (browser) {
 	throw new Error(`posts can only be imported server-side`);
 }
 
-// Get all posts and add metadata
-export const posts = Object.entries(import.meta.glob('/posts/**/*.md', { eager: true }))
-	.map(([filepath, post]) => {
-		const html = parse(render(post.default).body);
-		const preview = post.metadata.preview ? parse(post.metadata.preview) : html.querySelector('p');
+/** @type {Array<[string, PostModule]>} */
+const postEntries = Object.entries(
+	/** @type {Record<string, PostModule>} */ (import.meta.glob('/posts/**/*.md', { eager: true }))
+);
 
-		return {
-			...post.metadata,
-			slug: filepath
+// Get all posts and add metadata
+export const posts = postEntries
+	.map(([filepath, post]) => {
+		const metadata = post.metadata ?? {};
+		const parsedDate = metadata.date ? new Date(metadata.date) : undefined;
+		const sortDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? parsedDate.getTime() : 0;
+		const html = parse(render(post.default).body);
+		const preview = metadata.preview ? parse(metadata.preview) : (html.querySelector('p') ?? html);
+		const previewHtml = preview.toString();
+		const slug =
+			filepath
 				.replace(/(\/index)?\.md/, '')
 				.split('/')
-				.pop(),
+				.pop() ?? '';
+
+		return {
+			...metadata,
+			slug,
 			isIndexFile: filepath.endsWith('/index.md'),
-			date: post.metadata.date ? format(new Date(post.metadata.date), 'dd-MM-yyyy') : undefined,
+			date: parsedDate ? format(parsedDate, 'dd-MM-yyyy') : undefined,
 			preview: {
-				html: preview.toString(),
-				text: preview.structuredText ?? preview.toString()
+				html: previewHtml,
+				text: preview.structuredText ?? previewHtml
 			},
-			title: post.metadata.title
+			title: metadata.title ?? slug,
+			_sortDate: sortDate
 		};
 	})
 	// sort by date
-	.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+	.sort((a, b) => b._sortDate - a._sortDate)
 	// add references to the next/previous post
 	.map((post, index, allPosts) => ({
 		...post,

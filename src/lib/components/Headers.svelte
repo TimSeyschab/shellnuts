@@ -1,14 +1,15 @@
 <script>
 	import GithubMark from '$lib/icons/GithubMark.svelte';
+	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
 	import { themes } from '$lib/themes.js';
 
-	let /** @type {number} */ previousY,
-		/** @type {number} */ currentY = $state(),
-		/** @type {number} */ clientHeight = $state();
+	/** @type {number | undefined} */ let previousY;
+	/** @type {number} */ let currentY = $state(0);
+	/** @type {number} */ let clientHeight = $state(0);
 
 	/**
-	 * @param {any} y
+	 * @param {number} y
 	 */
 	const deriveDirection = (y) => {
 		const direction = !previousY || previousY < y ? 'down' : 'up';
@@ -52,20 +53,20 @@
 	bind:clientHeight
 >
 	<nav class="flex flex-grow">
-		<a href="/" class="mr-4 text-2xl font-mono md:mr-8">Shellnuts</a>
+		<a href={resolve('/')} class="mr-4 text-2xl font-mono md:mr-8">Shellnuts</a>
 		<ul class="mr-4 flex flex-grow items-center gap-4 md:gap-8">
 			<li>
-				<a href="/blog">Blog</a>
+				<a href={resolve('/blog')}>Blog</a>
 			</li>
 			<li>
-				<a href="/about">About</a>
+				<a href={resolve('/about')}>About</a>
 			</li>
 		</ul>
 	</nav>
 	<div class="flex items-center content-end gap-4 md:gap-8">
 		<label class="swap swap-rotate" aria-label="toggle darkmode" aria-live="polite">
 			<!-- this hidden checkbox controls the state -->
-				<input type="checkbox" checked={darkMode} onchange={handleSwitchDarkMode} />
+			<input type="checkbox" checked={darkMode} onchange={handleSwitchDarkMode} />
 			<!-- sun icon -->
 			<svg
 				class="swap-on fill-current w-8 h-8"

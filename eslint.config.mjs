@@ -3,6 +3,23 @@ import ts from 'typescript-eslint';
 import svelteConfig from './svelte.config.js';
 
 export default ts.config(
+	{
+		ignores: [
+			'.DS_Store',
+			'node_modules/**',
+			'build/**',
+			'.svelte-kit/**',
+			'package/**',
+			'.vercel/**',
+			'dist/**',
+			'coverage/**',
+			'.env',
+			'.env.*',
+			'pnpm-lock.yaml',
+			'package-lock.json',
+			'yarn.lock'
+		]
+	},
 	...ts.configs.recommended,
 	...svelte.configs.recommended,
 	{

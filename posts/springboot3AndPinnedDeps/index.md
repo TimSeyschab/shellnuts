@@ -1,14 +1,14 @@
 ---
-title: SpringBoot3 and pinned versions
+title: Spring Boot 3 and Pinned Versions
 date: 2023-12-09
 ---
 
-Who doesn't know the feeling? It was Thursday, almost 4 o'clock, so I decided to quickly switch to a new major version
-of [SpringBoot](https://spring.io/projects/spring-boot), only to end up wasting time on a trivial issue.
+Who doesn't know the feeling? It was Thursday, almost 4 PM, and I decided to quickly switch to a new major version
+of [Spring Boot](https://spring.io/projects/spring-boot), only to end up wasting time on a trivial issue.
 
 ## Necessary changes
 
-Since the application was still running on Java 11, I inevitably decided to migrate directly to Java 17.
+Since the application was still running on Java 11, I decided to migrate straight to Java 17.
 
 ```xml
 <properties>
@@ -17,35 +17,35 @@ Since the application was still running on Java 11, I inevitably decided to migr
 </properties>
 ```
 
-Only to realize in the next moment that the plugins I was using were not really happy with this change.
+A moment later, I realized that the plugins I was using were not exactly happy with that change.
 
 ```plaintext
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project app-project: Fatal error compiling: java.lang.IllegalAccessError: class lombok.javac.apt.LombokProcessor (in unnamed module @0x5a47730c) cannot access class com.sun.tools.javac.processing.JavacProcessingEnvironment (in module jdk.compiler) because module jdk.compiler does not export com.sun.tools.javac.processing to unnamed module @0x5a47730c -> [Help 1]
 ```
 
-So, I started looking for their latest versions and happily made all the updates to:
+So I looked up the latest versions and happily updated:
 
 - Lombok
 - MapStruct
-- SureFire
-- some unsung git-commit-id plugin
+- Surefire
+- some unsung `git-commit-id` plugin
 - etc
 
-To avoid any foreseeable issues, I carefully read through the migration guide and was glad to find out that
-trailing slash matching has been [disabled by default](https://github.com/spring-projects/spring-framework/issues/28552).
+To avoid foreseeable issues, I carefully read through the migration guide and was glad to find out that
+trailing slash matching had been [disabled by default](https://github.com/spring-projects/spring-framework/issues/28552).
 Accordingly, I adjusted the MVC tests.
 
-At that moment, I overlooked an external system test that inconsistently uses exactly those trailing slashes.
-But that was a problem for the next day.
+At that moment, I overlooked one external system test that inconsistently used those exact trailing slashes.
+That was a problem for the next day.
 
 The migration guide also recommended replacing `javax` with `jakarta` packages.
-A Ctrl+R later, I realized to better not rename all the Java SE package imports.
+One Ctrl+R later, I realized it was better not to rename all Java SE package imports.
 
 Up to this point, everything was running smoothly.
 
 ## Until it wasn't
 
-Thinking I had conquered all issues, I ran the failsafe tests and was surprised by the following error:
+Thinking I had conquered all issues, I ran the failsafe tests and was greeted by the following error:
 
 ```plaintext
 Caused by: java.lang.IllegalArgumentException:
@@ -54,13 +54,13 @@ Either remove Logback or the competing implementation (class org.slf4j.helpers.N
 If you are using WebLogic you will need to add 'org.slf4j' to prefer-application-packages in WEB-INF/weblogic.xml: org.slf4j.helpers.NOPLoggerFactory
 ```
 
-Honestly, why is it always the things you understand the least that break?
+Honestly, why is it always the stuff you understand the least that breaks?
 I strongly believe that logging should be simple.
-However, logging in Java can be many things, but it is certainly not simple.
+Logging in Java can be many things, but simple is usually not one of them.
 
-The initial suggestion from StackOverflow was to exclude "logback-classic" which didn't seem reasonable,
-but with nothing to lose, I tried it anyway.
-Much to my surprise, the test passed! 👍
+The initial Stack Overflow suggestion was to exclude `logback-classic`, which did not seem reasonable.
+But with nothing to lose, I tried it anyway.
+To my surprise, the test passed! 👍
 
 ```plaintext
 [INFO] -----------------------------------------------
@@ -70,7 +70,7 @@ Much to my surprise, the test passed! 👍
 
 ## Obviously that wasn't the solution
 
-When I attempted to start the application, I was faced with a disheartening realization:
+When I tried to start the application, I was faced with a disheartening realization:
 
 ```plaintext
 Exception in thread "main" java.lang.IllegalArgumentException:
@@ -81,38 +81,37 @@ If you are using WebLogic you will need to add 'org.slf4j' to prefer-application
 
 The same error.
 
-Consequently, I donned my detective hat and proceeded to analyze the situation.
+So I put on my detective hat and started digging.
 
 ### The origin of the slf4j-api transitive dependency
 
 ```bash
-$ mvn dependency:tree -Dincludes=org.slf4j:sl4j-api
+$ mvn dependency:tree -Dincludes=org.slf4j:slf4j-api
 ...
-[INFO] --- dependency:3.6.1:tree (default-cli) @ sl4jlogbackerror ---
+[INFO] --- dependency:3.6.1:tree (default-cli) @ slf4jlogbackerror ---
 [INFO] de.timse:reproducingtheslf4jerror:jar:0.0.1-SNAPSHOT
 [INFO] \- org.springframework.boot:spring-boot-starter-logging:jar:3.2.0:compile
 [INFO]    \- ch.qos.logback:logback-classic:jar:1.4.11:compile
-[INFO]       \- org.slf4j:slf4j-api:jar:1.7.1:compile
+   [INFO]       \- org.slf4j:slf4j-api:jar:1.7.1:compile
 ```
 
-So far, so bad. How could it be that the spring-boot-starter-logging had a dependency that caused the application to break?
+So far, so bad. How could `spring-boot-starter-logging` pull in a dependency that broke the app?
 
-The spring-boot-starter-logging dependency relied on three libraries:
+`spring-boot-starter-logging` depends on three libraries:
 
 - logback-classic
 - log4j-to-slf4j
 - jul-to-slf4j
 
-All of them had specified the slf4j-api version of **2.0.7** in their parent POM.
-On a closer look, something stood out!
+All of them specified `slf4j-api` version **2.0.7** in their parent POM.
+On closer inspection, something stood out.
 
-If **2.0.7** was the correct version and there was no other dependency overwriting it,
-then there could only be one person causing the setting to be different...
+If **2.0.7** was the correct version and no other dependency was overriding it,
+there could only be one person causing the mismatch...
 
 ![well of course I know him, He's me](./wellIknowhm.webp)
 
-Clearly, nestled among various other configurations in the properties within the POM,
-there was a little pinned version number:
+Buried among a bunch of other properties in the POM, there was a tiny pinned version:
 
 ```xml
 <properties>
@@ -121,4 +120,4 @@ there was a little pinned version number:
 </properties>
 ```
 
-I took a long look outside my window and called it a day!
+I stared out the window for a while and called it a day.

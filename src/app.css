@@ -3,11 +3,11 @@
 @config "../tailwind.config.js";
 @plugin "daisyui" {
 	themes:
-		garden --default,
+		autumn --default,
 		forest --prefersdark;
 }
 
-html[data-theme='garden'] {
+html[data-theme='autumn'] {
 	color-scheme: light;
 }
 

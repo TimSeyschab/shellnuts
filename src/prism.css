@@ -19,7 +19,7 @@ html[data-theme='forest'] {
 	--prism-deleted-bg: #fb4934;
 }
 
-html[data-theme='garden'] {
+html[data-theme='autumn'] {
 	--prism-fg: #3c3836;
 	--prism-selection-fg: #282828;
 	--prism-selection-bg: #a89984;

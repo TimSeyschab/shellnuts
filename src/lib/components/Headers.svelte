@@ -21,7 +21,7 @@
 	let scrollDirection = $derived(deriveDirection(currentY));
 	let offscreen = $derived(scrollDirection === 'down' && currentY > clientHeight * 4);
 
-	const LIGHT_THEME = 'garden';
+	const LIGHT_THEME = 'autumn';
 	const DARK_THEME = 'forest';
 	let darkMode = $state(false);
 
@@ -48,7 +48,7 @@
 <svelte:window bind:scrollY={currentY} />
 
 <header
-	class="sticky top-0 flex h-[var(--header-height)] items-center bg-surface-1/50 px-4 mb-2 text-lg backdrop-blur-sm transition-transform ease-in bg-secondary-content"
+	class="sticky top-0 z-20 mb-2 flex h-[var(--header-height)] items-center border-b border-base-300 bg-base-100/85 px-4 text-lg text-base-content backdrop-blur-sm transition-transform ease-in"
 	class:motion-safe:-translate-y-full={offscreen}
 	bind:clientHeight
 >
@@ -91,7 +91,7 @@
 			target="_blank"
 			rel="noopener noreferrer"
 			aria-label="Github"
-			class="transition-colors hover:text-prime"
+			class="transition-colors hover:text-primary"
 		>
 			<GithubMark className="w-6" />
 		</a>

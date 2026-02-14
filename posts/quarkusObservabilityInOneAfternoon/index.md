@@ -1,5 +1,5 @@
 ---
-title: Quarkus observability in one long afternoon
+title: Quarkus observability as a practical reference
 date: 2026-02-14
 ---
 
@@ -9,22 +9,26 @@ At some point, every project claims "we have monitoring" and what it really mean
 - logs without context,
 - traces that exist only in slides.
 
-So I decided to spend one long Saturday afternoon building a proper reference implementation in
+So I built a proper reference implementation in
 [`quarkus-observability`](https://github.com/TimSeyschab/quarkus-observability).
 
 The goal was simple: have one repo I can copy from for future projects, and finally understand the full path from request to trace to logs to metrics without hand-wavy gaps.
 
-## What happened in that afternoon
+## What happened over that session
 
-The commit history is basically the diary:
+The commit timeline is basically the diary:
 
 ```plaintext
-21f0e61 | 2026-02-14 13:43 | Initial commit
- d0668b7 | 2026-02-14 14:00 | feat: add initial CoffeeShop application setup
-  6dac0bb | 2026-02-14 17:29 | feat: enhance Grafana dashboards
+2026-02-14 13:43 | Initial commit
+2026-02-14 14:00 | initial CoffeeShop setup
+2026-02-14 15:40-16:20 | multiple amend/rebase/reset iterations
+2026-02-14 17:29 | dashboard and UX polish pass
 ```
 
-So yes, this started after lunch and ended somewhere between "just one more panel" and "why are there 12 tabs open in Grafana?".
+Based on the reflog, the visible implementation sprint happened on Saturday, February 14, 2026,
+from early afternoon into early evening, with several rewrite passes in between.
+I still would not pin this to an exact duration, because the thinking and reading part was the bigger chunk anyway.
+It ended somewhere between "just one more panel" and "why are there 12 tabs open in Grafana?".
 
 ## What I actually built
 
@@ -39,6 +43,10 @@ The stack is local-first with Docker Compose and includes:
 - Redpanda/Kafka + MariaDB for the business flow (CoffeeShop order lifecycle)
 
 ![Grafana technical overview](./quarkus-overview.png)
+
+The hardest part was not writing the YAML or Java code.
+It was reading the documentation of each component carefully enough to wire everything together correctly:
+Quarkus, OTel Collector, Tempo, Prometheus, Loki, Promtail and Grafana all have slightly different expectations.
 
 ## The part that made it click for me
 

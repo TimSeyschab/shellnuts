@@ -49,22 +49,27 @@
 				<a class="btn btn-ghost" href={resolve('/about')}>About</a>
 			</div>
 		</div>
-		<div class="w-full max-w-xl rounded-box border border-base-300 bg-base-200/40 p-4 shadow-lg">
+		<div
+			id="animation-shell"
+			class="hidden w-full max-w-xl rounded-box border border-base-300 bg-base-100 shadow-xl md:block"
+		>
 			{#await wait()}
 				<div class="flex h-40 items-center justify-center">
 					<span class="loading loading-spinner text-secondary w-12">Loading</span>
 				</div>
 			{:then}
-				<div class="mockup-code">
-					<pre data-prefix="λ"><code transition:typewriter onintroend={() => (stageOne = true)}
-							>npm install -g shellnuts</code
+				<div class="mockup-code bg-neutral text-neutral-content shadow-md">
+					<pre data-prefix="λ"><code
+							class="text-zinc-100"
+							transition:typewriter
+							onintroend={() => (stageOne = true)}>npm install -g shellnuts</code
 						></pre>
 					{#if stageOne === true}
-						<pre data-prefix="λ"><code class="text-success"
+						<pre data-prefix="λ"><code class="text-emerald-200"
 								>up to date, audited 1 package in 1s</code
 							></pre>
-						<pre data-prefix="λ"><code class="text-success"
-								>Check out the <a class="link-secondary underline" href={resolve('/blog')}>blog</a
+						<pre data-prefix="λ"><code class="text-emerald-200"
+								>Check out the <a class="link-accent underline" href={resolve('/blog')}>blog</a
 								> 🤖</code
 							></pre>
 					{/if}

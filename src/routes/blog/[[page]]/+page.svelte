@@ -10,12 +10,17 @@
 	let { data } = $props();
 </script>
 
-<div class="h-screen">
-	<h1 class="text-center text-xl font-bold tracking-tight">
-		Writing about Java hacks, DevOps adventures and culinary experiments 👨‍💻
-	</h1>
+<section class="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
+	<div class="mb-8 space-y-2 md:mb-10">
+		<h1 class="text-1xl font-bold tracking-tight md:text-4xl">
+			Writing about Java hacks, DevOps adventures and culinary experiments 👨‍💻
+		</h1>
+		<p class="text-base-content/70">
+			Implementation notes, debugging war stories and practical setups I can reuse.
+		</p>
+	</div>
 
-	<div class="flex flex-col flex-grow gap-2 items-center justify-center pt-10">
+	<div class="space-y-6">
 		<PostsList posts={data.posts} />
 	</div>
-</div>
+</section>

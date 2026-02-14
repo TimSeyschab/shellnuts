@@ -1,5 +1,7 @@
 <script>
 	import { resolve } from '$app/paths';
+	/** @type {{ data: { latestPosts: Array<{ slug: string, title: string, date?: string, preview: { text: string } }> } }} */
+	let { data } = $props();
 
 	const wait = () => new Promise((res) => setTimeout(res, 1000));
 	let stageOne = $state(false);
@@ -31,29 +33,70 @@
 	}
 </script>
 
-<div class="h-screen flex items-center justify-center">
-	{#await wait()}
-		<span class="loading loading-spinner text-secondary w-20">Loading</span>
-	{:then}
-		<div class="mockup-code">
-			<pre data-prefix="λ"><code transition:typewriter onintroend={() => (stageOne = true)}
-					>npm install -g shellnuts</code
-				></pre>
-			{#if stageOne === true}
-				<pre data-prefix="λ"><code class="text-success">up to date, audited 1 package in 1s</code
-					></pre>
-				<pre data-prefix="λ"><code class="text-success"
-						>Check out the <a class="link-secondary underline" href={resolve('/blog')}>blog</a
-						> 🤖</code
-					></pre>
-			{/if}
+<section class="hero min-h-[75vh]">
+	<div class="hero-content w-full max-w-6xl flex-col gap-10 px-4 lg:flex-row lg:items-start">
+		<div class="max-w-2xl space-y-5">
+			<p class="badge badge-outline">Shellnuts</p>
+			<h1 class="text-4xl font-bold leading-tight md:text-5xl">
+				Java hacks, observability rabbit holes and the occasional kitchen experiment.
+			</h1>
+			<p class="text-base-content/70 text-lg">
+				Real notes from real implementation sessions. No theory theater, just what worked and what
+				wasted an afternoon.
+			</p>
+			<div class="flex flex-wrap gap-3">
+				<a class="btn btn-primary" href={resolve('/blog')}>Read the Blog</a>
+				<a class="btn btn-ghost" href={resolve('/about')}>About</a>
+			</div>
 		</div>
-	{/await}
-</div>
+		<div class="w-full max-w-xl rounded-box border border-base-300 bg-base-200/40 p-4 shadow-lg">
+			{#await wait()}
+				<div class="flex h-40 items-center justify-center">
+					<span class="loading loading-spinner text-secondary w-12">Loading</span>
+				</div>
+			{:then}
+				<div class="mockup-code">
+					<pre data-prefix="λ"><code transition:typewriter onintroend={() => (stageOne = true)}
+							>npm install -g shellnuts</code
+						></pre>
+					{#if stageOne === true}
+						<pre data-prefix="λ"><code class="text-success"
+								>up to date, audited 1 package in 1s</code
+							></pre>
+						<pre data-prefix="λ"><code class="text-success"
+								>Check out the <a class="link-secondary underline" href={resolve('/blog')}>blog</a
+								> 🤖</code
+							></pre>
+					{/if}
+				</div>
+			{/await}
+		</div>
+	</div>
+</section>
 
-<style>
-	.mockup-code {
-		width: 24rem;
-		height: 9rem;
-	}
-</style>
+<section class="mx-auto w-full max-w-6xl px-4 pb-16 md:pb-24">
+	<div class="mb-6 flex items-center justify-between gap-4">
+		<div>
+			<h2 class="text-2xl font-bold md:text-3xl">Latest Posts</h2>
+			<p class="text-base-content/70">Fresh notes from recent implementation sessions.</p>
+		</div>
+		<a class="btn btn-outline btn-sm md:btn-md" href={resolve('/blog')}>See all</a>
+	</div>
+
+	<div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+		{#each data.latestPosts as post (post.slug)}
+			<article
+				class="card border border-base-300 bg-base-100 shadow-sm transition-all hover:shadow-lg"
+			>
+				<div class="card-body gap-3">
+					<span class="badge badge-outline w-fit">{post.date}</span>
+					<h3 class="card-title text-xl leading-tight">{post.title}</h3>
+					<p class="text-base-content/80 line-clamp-3">{post.preview.text}</p>
+					<div class="card-actions justify-end">
+						<a class="btn btn-ghost btn-sm" href={resolve(`/post/${post.slug}`)}>Read article</a>
+					</div>
+				</div>
+			</article>
+		{/each}
+	</div>
+</section>

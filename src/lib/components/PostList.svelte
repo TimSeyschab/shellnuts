@@ -2,36 +2,23 @@
 	import { resolve } from '$app/paths';
 
 	let { posts } = $props();
-
-	function callLink(event: UIEvent) {
-		const isTextSelected = window?.getSelection()?.toString();
-		if (!isTextSelected && event.target instanceof HTMLElement) {
-			let parent = event.target.closest('.card');
-			(parent?.querySelector('.main-link') as HTMLAnchorElement).click();
-		}
-	}
 </script>
 
 {#each posts as post (post.slug)}
-	<div
-		class="card w-96 bg-secondary-content shadow-xl"
-		role="button"
-		tabindex="0"
-		onclick={(el) => callLink(el)}
-		onkeydown={(el) => callLink(el)}
+	<article
+		class="card w-full border border-base-300 bg-base-100 shadow-md transition-all hover:shadow-xl"
 	>
-		<div class="card-body">
-			<h2 class="card-title">
-				<a class="main-link" href={resolve(`/post/${post.slug}`)}>{post.date}: {post.title}</a>
+		<div class="card-body gap-4 p-6 md:p-8">
+			<div class="flex flex-wrap items-center gap-2">
+				<span class="badge badge-outline">{post.date}</span>
+			</div>
+			<h2 class="card-title text-2xl md:text-3xl leading-tight">
+				<a class="main-link" href={resolve(`/post/${post.slug}`)}>{post.title}</a>
 			</h2>
-			<p>{post.preview.text}</p>
-			<div class="card-actions justify-end"></div>
+			<p class="text-base-content/80 text-base md:text-lg">{post.preview.text}</p>
+			<div class="card-actions justify-end">
+				<a class="btn btn-ghost btn-sm" href={resolve(`/post/${post.slug}`)}>Read article</a>
+			</div>
 		</div>
-	</div>
+	</article>
 {/each}
-
-<style>
-	:global(.card-body p a) {
-		text-decoration: underline;
-	}
-</style>

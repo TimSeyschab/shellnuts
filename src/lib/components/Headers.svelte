@@ -1,6 +1,5 @@
 <script>
 	import GithubMark from '$lib/icons/GithubMark.svelte';
-	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { themes } from '$lib/themes.js';
 
@@ -21,34 +20,27 @@
 	let scrollDirection = $derived(deriveDirection(currentY));
 	let offscreen = $derived(scrollDirection === 'down' && currentY > clientHeight * 4);
 
-	let darkMode = false;
+	const LIGHT_THEME = 'garden';
+	const DARK_THEME = 'forest';
+	let darkMode = $state(false);
+
+	/**
+	 * @param {string} theme
+	 */
+	function applyTheme(theme) {
+		const nextTheme = themes.includes(theme) ? theme : LIGHT_THEME;
+		document.documentElement.setAttribute('data-theme', nextTheme);
+		window.localStorage.setItem('theme', nextTheme);
+		darkMode = nextTheme === DARK_THEME;
+	}
 
 	onMount(() => {
-		if (typeof window !== 'undefined') {
-			const theme = window.localStorage.getItem('theme');
-			if (theme && themes.includes(theme)) {
-				document.documentElement.setAttribute('data-theme', theme);
-				darkMode = theme === 'forest';
-			}
-		}
+		const activeTheme = document.documentElement.getAttribute('data-theme') ?? LIGHT_THEME;
+		darkMode = activeTheme === DARK_THEME;
 	});
 
 	function handleSwitchDarkMode() {
-		darkMode = !darkMode;
-		const one_year = 60 * 60 * 24 * 365;
-		let theme = 'garden';
-		if (darkMode) {
-			theme = 'forest';
-		}
-		window.localStorage.setItem('theme', theme);
-		document.cookie = `theme=${theme}; max-age=${one_year}; path=/; SameSite=Strict;`;
-		document.documentElement.setAttribute('data-theme', theme);
-	}
-
-	if (browser) {
-		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			handleSwitchDarkMode();
-		}
+		applyTheme(darkMode ? LIGHT_THEME : DARK_THEME);
 	}
 </script>
 
@@ -73,7 +65,7 @@
 	<div class="flex items-center content-end gap-4 md:gap-8">
 		<label class="swap swap-rotate" aria-label="toggle darkmode" aria-live="polite">
 			<!-- this hidden checkbox controls the state -->
-			<input type="checkbox" onclick={handleSwitchDarkMode} />
+				<input type="checkbox" checked={darkMode} onchange={handleSwitchDarkMode} />
 			<!-- sun icon -->
 			<svg
 				class="swap-on fill-current w-8 h-8"

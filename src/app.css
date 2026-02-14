@@ -4,3 +4,11 @@
 @plugin "daisyui" {
     themes: garden --default, forest --prefersdark;
 }
+
+html[data-theme='garden'] {
+	color-scheme: light;
+}
+
+html[data-theme='forest'] {
+	color-scheme: dark;
+}

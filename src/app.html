@@ -1,11 +1,27 @@
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%sveltekit.head%
-	</head>
+<html lang="en" data-theme="garden">
+		<head>
+			<meta charset="utf-8" />
+			<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<script>
+				(() => {
+					const themes = ['garden', 'forest'];
+					const fallback = window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'forest'
+						: 'garden';
+
+					try {
+						const stored = window.localStorage.getItem('theme');
+						const theme = stored && themes.includes(stored) ? stored : fallback;
+						document.documentElement.setAttribute('data-theme', theme);
+					} catch {
+						document.documentElement.setAttribute('data-theme', fallback);
+					}
+				})();
+			</script>
+			%sveltekit.head%
+		</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>

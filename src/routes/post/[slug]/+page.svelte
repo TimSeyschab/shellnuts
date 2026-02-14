@@ -1,5 +1,6 @@
 <script>
 	import PostNav from '$lib/components/ContentNav.svelte';
+	import SeoHead from '$lib/components/SeoHead.svelte';
 
 	/**
 	 * @typedef {Object} Props
@@ -8,8 +9,22 @@
 
 	/** @type {Props} */
 	let { data } = $props();
-	const website = 'https://shellnuts.de';
-	const url = $derived(`${website}/post/${data.post.slug}`);
+	const siteUrl = 'https://shellnuts.de';
+	const authorName = 'Tim';
+	const url = $derived(`${siteUrl}/post/${data.post.slug}`);
+	const canonicalUrl = $derived(url);
+	const isoPublishedDate = $derived.by(() => {
+		if (!data.post.date) {
+			return undefined;
+		}
+
+		const [day, month, year] = data.post.date.split('-');
+		if (!day || !month || !year) {
+			return undefined;
+		}
+
+		return `${year}-${month}-${day}`;
+	});
 	// generated open-graph image for sharing on social media.
 	// see https://og-image.vercel.app/ for more options.
 	const ogImage = $derived(
@@ -17,27 +32,44 @@
 			data.post.title
 		)}**?theme=light&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fhyper-color-logo.svg`
 	);
+	const structuredData = $derived({
+		'@context': 'https://schema.org',
+		'@type': 'BlogPosting',
+		headline: data.post.title,
+		description: data.post.preview.text,
+		url: canonicalUrl,
+		mainEntityOfPage: canonicalUrl,
+		image: ogImage,
+		author: {
+			'@type': 'Person',
+			name: authorName
+		},
+		publisher: {
+			'@type': 'Person',
+			name: authorName
+		},
+		datePublished: isoPublishedDate,
+		dateModified: isoPublishedDate
+	});
 </script>
 
+<SeoHead
+	title={`${data.post.title} - ${authorName}`}
+	description={data.post.preview.text}
+	{canonicalUrl}
+	{siteUrl}
+	ogType="article"
+	{ogImage}
+	jsonLd={structuredData}
+	author={authorName}
+/>
+
 <svelte:head>
-	<title>{data.post.title} - Tim</title>
-	<meta name="description" content={data.post.preview.text} />
-	<meta name="author" content="Tim" />
-
-	<!-- Facebook Meta Tags -->
-	<meta property="og:url" content={url} />
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content={data.post.title} />
-	<meta property="og:description" content={data.post.preview.text} />
-	<meta property="og:image" content={ogImage} />
-
-	<!-- Twitter Meta Tags -->
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta property="twitter:domain" content={website} />
-	<meta property="twitter:url" content={url} />
-	<meta name="twitter:title" content={data.post.title} />
-	<meta name="twitter:description" content={data.post.preview.text} />
-	<meta name="twitter:image" content={ogImage} />
+	{#if isoPublishedDate}
+		<meta property="article:published_time" content={isoPublishedDate} />
+	{/if}
+	<meta property="article:author" content={authorName} />
+	<meta property="twitter:domain" content={siteUrl} />
 </svelte:head>
 
 <section class="mx-auto flex w-full max-w-6xl justify-center gap-8 px-4 pb-20">

@@ -1,8 +1,22 @@
 <script>
 	import { resolve } from '$app/paths';
 	import PostList from '$lib/components/PostList.svelte';
+	import SeoHead from '$lib/components/SeoHead.svelte';
 	/** @type {{ data: { latestPosts: Array<{ slug: string, title: string, date?: string, preview: { text: string } }> } }} */
 	let { data } = $props();
+	const siteUrl = 'https://shellnuts.de';
+	const pageTitle = 'Shellnuts | Practical Java, DevOps and Observability Notes';
+	const pageDescription =
+		'Practical implementation notes on Java, DevOps, observability and debugging sessions from real projects.';
+	const canonicalUrl = `${siteUrl}/`;
+	const structuredData = {
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: 'Shellnuts',
+		url: siteUrl,
+		description: pageDescription,
+		inLanguage: 'en'
+	};
 
 	const wait = () => new Promise((res) => setTimeout(res, 1000));
 	let stageOne = $state(false);
@@ -33,6 +47,14 @@
 		};
 	}
 </script>
+
+<SeoHead
+	title={pageTitle}
+	description={pageDescription}
+	{canonicalUrl}
+	{siteUrl}
+	jsonLd={structuredData}
+/>
 
 <section class="hero min-h-[75vh]">
 	<div class="hero-content w-full max-w-6xl flex-col gap-10 px-4 lg:flex-row lg:items-start">

@@ -1,15 +1,56 @@
 <script>
 	import PostsList from '$lib/components/PostList.svelte';
+	import SeoHead from '$lib/components/SeoHead.svelte';
 	import { resolve } from '$app/paths';
 
 	/**
 	 * @typedef {Object} Props
-	 * @property {any} data
+	 * @property {{
+	 *   page: number,
+	 *   limit: number,
+	 *   totalPages: number,
+	 *   hasPreviousPage: boolean,
+	 *   hasNextPage: boolean,
+	 *   posts: Array<{ slug: string, title: string }>
+	 * }} data
 	 */
 
 	/** @type {Props} */
 	let { data } = $props();
+	const siteUrl = 'https://shellnuts.de';
+	const pageDescription =
+		'Implementation notes, debugging stories and practical setup guides from real project sessions.';
+	const pageTitle = $derived(
+		data.page > 1
+			? `Shellnuts Blog - Page ${data.page} | Java, DevOps, Observability`
+			: 'Shellnuts Blog | Java, DevOps, Observability'
+	);
+	const canonicalUrl = $derived(data.page > 1 ? `${siteUrl}/blog/${data.page}` : `${siteUrl}/blog`);
+	const structuredData = $derived({
+		'@context': 'https://schema.org',
+		'@type': 'CollectionPage',
+		name: pageTitle,
+		description: pageDescription,
+		url: canonicalUrl,
+		mainEntity: {
+			'@type': 'ItemList',
+			itemListElement: data.posts.map((post, index) => ({
+				'@type': 'ListItem',
+				position: index + 1 + (data.page - 1) * data.limit,
+				url: `${siteUrl}/post/${post.slug}`,
+				name: post.title
+			}))
+		}
+	});
 </script>
+
+<SeoHead
+	title={pageTitle}
+	description={pageDescription}
+	{canonicalUrl}
+	{siteUrl}
+	jsonLd={structuredData}
+/>
 
 <section class="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
 	<div class="mb-8 space-y-2 md:mb-10">

@@ -1,5 +1,6 @@
 <script>
 	import { resolve } from '$app/paths';
+	import PostList from '$lib/components/PostList.svelte';
 	/** @type {{ data: { latestPosts: Array<{ slug: string, title: string, date?: string, preview: { text: string } }> } }} */
 	let { data } = $props();
 
@@ -88,20 +89,7 @@
 		<a class="btn btn-outline btn-sm md:btn-md" href={resolve('/blog')}>See all</a>
 	</div>
 
-	<div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-		{#each data.latestPosts as post (post.slug)}
-			<article
-				class="card border border-base-300 bg-base-100 shadow-sm transition-all hover:shadow-lg"
-			>
-				<div class="card-body gap-3">
-					<span class="badge badge-outline w-fit">{post.date}</span>
-					<h3 class="card-title text-xl leading-tight">{post.title}</h3>
-					<p class="text-base-content/80 line-clamp-3">{post.preview.text}</p>
-					<div class="card-actions justify-end">
-						<a class="btn btn-ghost btn-sm" href={resolve(`/post/${post.slug}`)}>Read article</a>
-					</div>
-				</div>
-			</article>
-		{/each}
+	<div class="space-y-6">
+		<PostList posts={data.latestPosts} />
 	</div>
 </section>

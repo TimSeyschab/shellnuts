@@ -2,7 +2,6 @@
 	import GithubMark from '$lib/icons/GithubMark.svelte';
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
-	import { themes } from '$lib/themes.js';
 
 	/** @type {number | undefined} */ let previousY;
 	/** @type {number} */ let currentY = $state(0);
@@ -21,34 +20,47 @@
 	let scrollDirection = $derived(deriveDirection(currentY));
 	let offscreen = $derived(scrollDirection === 'down' && currentY > clientHeight * 4);
 
-	const LIGHT_THEME = 'autumn';
-	const DARK_THEME = 'forest';
 	let darkMode = $state(false);
+
+	function getThemeConfig() {
+		const root = document.documentElement;
+		const lightTheme = root.dataset.lightTheme ?? 'autumn';
+		const darkTheme = root.dataset.darkTheme ?? lightTheme;
+
+		return {
+			lightTheme,
+			darkTheme,
+			themes: [lightTheme, darkTheme]
+		};
+	}
 
 	/**
 	 * @param {string} theme
 	 */
 	function applyTheme(theme) {
-		const nextTheme = themes.includes(theme) ? theme : LIGHT_THEME;
+		const { lightTheme, darkTheme, themes } = getThemeConfig();
+		const nextTheme = themes.includes(theme) ? theme : lightTheme;
 		document.documentElement.setAttribute('data-theme', nextTheme);
 		window.localStorage.setItem('theme', nextTheme);
-		darkMode = nextTheme === DARK_THEME;
+		darkMode = nextTheme === darkTheme;
 	}
 
 	onMount(() => {
-		const activeTheme = document.documentElement.getAttribute('data-theme') ?? LIGHT_THEME;
-		darkMode = activeTheme === DARK_THEME;
+		const { lightTheme, darkTheme } = getThemeConfig();
+		const activeTheme = document.documentElement.getAttribute('data-theme') ?? lightTheme;
+		darkMode = activeTheme === darkTheme;
 	});
 
 	function handleSwitchDarkMode() {
-		applyTheme(darkMode ? LIGHT_THEME : DARK_THEME);
+		const { lightTheme, darkTheme } = getThemeConfig();
+		applyTheme(darkMode ? lightTheme : darkTheme);
 	}
 </script>
 
 <svelte:window bind:scrollY={currentY} />
 
 <header
-	class="sticky top-0 z-20 mb-2 flex h-[var(--header-height)] items-center border-b border-base-300 bg-base-100/85 px-4 text-lg text-base-content backdrop-blur-sm transition-transform ease-in"
+	class="sticky top-0 z-50 mb-2 flex h-[var(--header-height)] items-center border-b border-base-300 bg-base-100/85 px-4 text-lg text-base-content backdrop-blur-sm transition-transform ease-in"
 	class:motion-safe:-translate-y-full={offscreen}
 	bind:clientHeight
 >

@@ -1,5 +1,6 @@
 <script>
 	import PostsList from '$lib/components/PostList.svelte';
+	import { resolve } from '$app/paths';
 
 	/**
 	 * @typedef {Object} Props
@@ -23,4 +24,23 @@
 	<div class="space-y-6">
 		<PostsList posts={data.posts} />
 	</div>
+
+	{#if data.totalPages > 1}
+		<nav class="mt-10 flex items-center justify-center gap-3" aria-label="Pagination">
+			{#if data.hasPreviousPage}
+				<a
+					class="btn btn-outline btn-sm"
+					href={resolve(data.page - 1 === 1 ? '/blog' : `/blog/${data.page - 1}`)}
+				>
+					Previous
+				</a>
+			{/if}
+
+			<span class="text-sm text-base-content/70">Page {data.page} of {data.totalPages}</span>
+
+			{#if data.hasNextPage}
+				<a class="btn btn-outline btn-sm" href={resolve(`/blog/${data.page + 1}`)}>Next</a>
+			{/if}
+		</nav>
+	{/if}
 </section>

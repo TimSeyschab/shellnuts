@@ -58,8 +58,27 @@ export const posts = postEntries
 	// sort by date
 	.sort((a, b) => b._sortDate - a._sortDate)
 	// add references to the next/previous post
-	.map((post, index, allPosts) => ({
-		...post,
-		next: allPosts[index - 1],
-		previous: allPosts[index + 1]
-	}));
+	.map((post, index, allPosts) => {
+		const nextPost = allPosts[index - 1];
+		const previousPost = allPosts[index + 1];
+		const { _sortDate: currentSortDate, ...current } = post;
+		void currentSortDate;
+		const next = nextPost
+			? (({ _sortDate: nextSortDate, ...nextData }) => {
+					void nextSortDate;
+					return nextData;
+				})(nextPost)
+			: undefined;
+		const previous = previousPost
+			? (({ _sortDate: previousSortDate, ...previousData }) => {
+					void previousSortDate;
+					return previousData;
+				})(previousPost)
+			: undefined;
+
+		return {
+			...current,
+			next,
+			previous
+		};
+	});

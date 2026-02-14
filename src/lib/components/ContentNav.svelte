@@ -1,7 +1,4 @@
 <script>
-	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
-
 	/**
 	 * @typedef {{ id: string, value: string }} Heading
 	 * @typedef {Object} Props
@@ -11,50 +8,52 @@
 	/** @type {Props} */
 	let { post } = $props();
 
-	/** @type {(HTMLElement | null)[]} */ let elements = [];
 	let headings = $derived(post.headings ?? []);
-	/** @type {Heading | undefined} */ let activeHeading = $state();
-	/** @type {number} */ let scrollY = $state(0);
+	let elements = $derived.by(() => {
+		if (typeof document === 'undefined') {
+			return [];
+		}
+
+		return headings.map((heading) => document.getElementById(heading.id));
+	});
+	/** @type {string | undefined} */ let activeHeadingId = $state();
 
 	$effect(() => {
-		updateHeadings();
-		if (!activeHeading && headings.length > 0) {
-			activeHeading = headings[0];
-		}
-	});
-
-	onMount(() => {
-		setActiveHeading();
-	});
-
-	function updateHeadings() {
-		if (browser) {
-			elements = headings.map((heading) => document.getElementById(heading.id));
-		}
-	}
-
-	function setActiveHeading() {
-		if (!browser || headings.length === 0) {
+		// Re-evaluate active heading when article headings/elements change.
+		if (headings.length === 0) {
+			activeHeadingId = undefined;
 			return;
 		}
 
-		scrollY = window.scrollY;
+		setActiveHeading();
+	});
+
+	function setActiveHeading() {
+		if (typeof window === 'undefined' || headings.length === 0) {
+			return;
+		}
+
+		const scrollY = window.scrollY;
 
 		const visibleIndex =
 			elements.findIndex(
 				(element) => element && element.offsetTop + element.clientHeight > scrollY
 			) - 1;
-		activeHeading = headings[visibleIndex];
+		let nextActiveId = headings[visibleIndex]?.id;
 
 		const pageHeight = document.body.scrollHeight || 1;
 		const scrollProgress = (scrollY + window.innerHeight) / pageHeight;
 
-		if (!activeHeading) {
+		if (!nextActiveId) {
 			if (scrollProgress > 0.5) {
-				activeHeading = headings[headings.length - 1];
+				nextActiveId = headings[headings.length - 1]?.id;
 			} else {
-				activeHeading = headings[0];
+				nextActiveId = headings[0]?.id;
 			}
+		}
+
+		if (nextActiveId !== activeHeadingId) {
+			activeHeadingId = nextActiveId;
 		}
 	}
 </script>
@@ -63,10 +62,10 @@
 
 <div>
 	<ul class="menu w-56 rounded-box">
-		<h2 class="menu-title">Content</h2>
+		<li class="menu-title">Content</li>
 		{#each headings as heading (heading.id)}
 			<li>
-				<a class:active={activeHeading === heading} href={`#${heading.id}`}>{heading.value}</a>
+				<a class:active={activeHeadingId === heading.id} href={`#${heading.id}`}>{heading.value}</a>
 			</li>
 		{/each}
 	</ul>

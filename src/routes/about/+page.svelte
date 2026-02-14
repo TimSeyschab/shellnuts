@@ -1,21 +1,21 @@
-<div class="h-screen">
-	<div class="items-center justify-center">
-		<article class="prose lg:prose-xl mx-auto rounded-xl shadow-md overflow-hidden p-3">
-			<h2 class="text-2xl font-bold">About Shellnuts</h2>
-			<p class="mt-4">Hey there! 👋</p>
-			<p>I'm Tim, your friendly neighborhood Fullstack Developer rocking it out in Germany 🇩🇪.</p>
-			<p>
-				Welcome to my digital hangout, the place where I spill the beans (and code) on all things
-				Java, DevOps, and, brace yourself, even a bit of cooking 🍲!
-			</p>
-			<p>
-				So, whether you're here for the Java hacks, the lowdown on DevOps adventures 👨‍💻, or just
-				want to know what culinary experiment I'm currently obsessed with, you're in for a ride.
-			</p>
-			<p>
-				Feel free to drop a comment (not yet supported) or hit me up. Let's make this internet thing
-				a bit cozier, one byte at a time! 🚀
-			</p>
-		</article>
-	</div>
-</div>
+<section class="mx-auto w-full max-w-4xl px-4 py-10 md:py-14">
+	<article
+		class="prose lg:prose-xl rounded-box border border-base-300 bg-base-100 p-5 shadow-sm md:p-8"
+	>
+		<h2 class="text-2xl font-bold">About Shellnuts</h2>
+		<p class="mt-4">Hi, I’m Tim, a full-stack developer based in Germany.</p>
+		<p>
+			Shellnuts is my place for practical notes from day-to-day implementation work. I mainly write
+			about Java, DevOps, observability and the kind of migration/debugging topics that usually take
+			longer than planned.
+		</p>
+		<p>
+			The goal is simple: keep a reusable reference for future projects and share things I would
+			have liked to read before starting similar tasks.
+		</p>
+		<p>
+			This year, I plan to publish more regularly, with a stronger focus on IT security topics
+			alongside Java, DevOps and observability.
+		</p>
+	</article>
+</section>

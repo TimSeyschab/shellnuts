@@ -40,20 +40,20 @@
 	<meta name="twitter:image" content={ogImage} />
 </svelte:head>
 
-<div class="h-screen">
-	<div class="flex justify-center">
-		<article class="prose lg:prose-xl rounded-xl overflow-hidden p-3 mb-20">
-			<h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
-				{data.post.title}
-			</h1>
-			<!-- render the post -->
-			<data.component />
-		</article>
+<section class="mx-auto flex w-full max-w-6xl justify-center gap-8 px-4 pb-20">
+	<article class="prose lg:prose-xl w-full overflow-hidden p-3">
+		<h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
+			{data.post.title}
+		</h1>
+		<!-- render the post -->
+		<data.component />
+	</article>
 
-		<div class="hidden md:block ml-8">
+	{#if data.post.headings?.length}
+		<div class="ml-8 hidden md:block">
 			<aside class="sticky top-10" aria-label="Table of Contents">
 				<PostNav post={data.post} />
 			</aside>
 		</div>
-	</div>
-</div>
+	{/if}
+</section>

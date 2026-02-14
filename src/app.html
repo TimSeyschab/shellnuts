@@ -1,22 +1,25 @@
 <!doctype html>
-<html lang="en" data-theme="autumn">
+<html lang="en" data-theme="autumn" data-light-theme="autumn" data-dark-theme="forest">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script>
 			(() => {
-				const themes = ['autumn', 'forest'];
+				const root = document.documentElement;
+				const lightTheme = root.dataset.lightTheme ?? 'autumn';
+				const darkTheme = root.dataset.darkTheme ?? lightTheme;
+				const themes = [lightTheme, darkTheme];
 				const fallback = window.matchMedia('(prefers-color-scheme: dark)').matches
-					? 'forest'
-					: 'autumn';
+					? darkTheme
+					: lightTheme;
 
 				try {
 					const stored = window.localStorage.getItem('theme');
 					const theme = stored && themes.includes(stored) ? stored : fallback;
-					document.documentElement.setAttribute('data-theme', theme);
+					root.setAttribute('data-theme', theme);
 				} catch {
-					document.documentElement.setAttribute('data-theme', fallback);
+					root.setAttribute('data-theme', fallback);
 				}
 			})();
 		</script>
